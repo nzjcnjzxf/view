@@ -1,7 +1,28 @@
-﻿body
+﻿
+@keyframes rotate{
+    0%{
+        transform: rotate(0) scale(0,0);
+    }
+    50%{
+        transform:  rotate(180deg)  scale(.5,.5)
+    }
+    100%{
+        transform: rotate(360deg) scale(1.2,1.2);
+    }
+}
+@keyframes smallToBig{
+    from{
+        transform: scale(.5,.5);
+    }
+   to{
+    transform: scale(1.2,1.2);
+   }
+}
+body
 {
     font-family: Helvetica neue, Arial, Tahoma;
     font-size: 16px;
+    overflow: hidden;
 }
 #r-slider-wrapper
 {
@@ -100,6 +121,27 @@
 {
     display: none;
 }
+.container{
+   z-index: 9999;
+   position: absolute;
+   width: 80%;
+   height: 50%;
+   left: 50%;top:50%;
+   transform: translate(-50%,-50%);
+}
+
+.box{
+    float: left;
+    width: 20%;
+    border-radius: 50%;
+    margin: 20px 50px 0 0;
+    animation: rotate 2s  linear infinite alternate;
+}  
+
+.box > img{
+    width: 100%;
+    border-radius: 50%;
+} 
 
 /* ================= Tablet (Portrait) 768px - 959px ================= */
 @media only screen and (min-width: 768px) and (max-width: 959px)
@@ -190,3 +232,4 @@
         margin-left: 0px;
     }
 }
+
