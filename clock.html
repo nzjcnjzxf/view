@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>闹钟</title>
+	<style>
+	 *{
+	 	margin: 0;
+	 	padding: 0;
+	 }
+	 body{
+	 	background: black;
+	 }
+	 #canvas{
+	 	display: block;
+	 	margin: 50px auto;
+	 	background: #fff;
+	 }
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="500"></canvas>
+</body>
+</html>
+<script>
+var body = document.getElementsByTagName('body')[0];
+var can = document.getElementById('canvas');
+var ctx = can.getContext('2d');
+function randomColor(){
+	return '#'+Math.floor(Math.random()*0xffffff).toString(16);
+}
+function strokeTime(data){
+	body.style.background = randomColor();
+	can.style.background = randomColor();
+	data.color = randomColor();
+	ctx.lineWidth = data.w;
+	ctx.strokeStyle =data.color;
+	ctx.beginPath();
+	ctx.moveTo(250,250);
+	// 时间是从0点开始的所以要逆时针旋转90deg
+	ctx.arc(250,250,data.len,(data.type*data.deg-90)*Math.PI/180,(data.type*data.deg-90)*Math.PI/180,false);
+	ctx.closePath();
+	ctx.stroke();
+}
+function clock(){
+	
+	ctx.clearRect(0,0,can.width,can.height);
+	var date = new Date();
+	var h = date.getHours();
+	var m = date.getMinutes();
+	var s = date.getSeconds();
+	m = m + s/60;
+	h = h + m/60;
+	ctx.lineWidth = 5;
+	ctx.strokeStyle = randomColor();
+	for(var i =0;i<60;i++){
+		ctx.beginPath();
+		ctx.moveTo(250,250);
+		ctx.arc(250,250,200,i*6*Math.PI/180,(i+1)*6*Math.PI/180,false);
+		ctx.closePath();
+		ctx.stroke();
+	}
+	ctx.fillStyle = randomColor();
+	ctx.beginPath()
+	ctx.arc(250,250,185,0,2*Math.PI,false);
+	ctx.closePath()
+	ctx.fill();
+	//时刻度和表盘
+	ctx.lineWidth = 10;
+	ctx.strokeStyle = randomColor();
+	for (var i=0;i<12 ;i++ )
+	{
+		ctx.beginPath();
+		ctx.moveTo(250,250);
+		ctx.arc(250,250,200,i*30*Math.PI/180,(i+1)*30*Math.PI/180,false);
+		ctx.closePath();
+		ctx.stroke();
+	}
+	ctx.fillStyle = randomColor();
+	ctx.beginPath()
+	ctx.arc(250,250,180,0,2*Math.PI,false);
+	ctx.closePath()
+	ctx.fill();
+	// 时针  
+	strokeTime({color:'yellow',type:h,len:'80',deg:30,w:'7'});
+	// 分针
+	strokeTime({color:'blue',type:m,len:'120',deg:6,w:'5'});
+	// 秒针
+	strokeTime({color:'red',type:s,len:'180',deg:6,w:'3'});
+
+	ctx.fillStyle =randomColor()
+	ctx.beginPath()
+	ctx.arc(250,250,10,0,2*Math.PI,false);
+	ctx.closePath();
+	ctx.fill();
+}
+clock();
+setInterval(clock,1000);
+</script>

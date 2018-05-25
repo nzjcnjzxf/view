@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>delegate</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.father{
+			width: 500px;
+			margin: 100px auto;
+			border: 1px solid black;
+		}
+		.father li{
+			width: 500px;
+			height: 50px;
+			line-height: 50px;
+			text-align: center;
+			list-style: none;
+		}
+	</style>
+</head>
+<body>
+	<ul class="father">
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+	</ul>
+</body>
+</html>
+<script>
+	var randomBg=function(){
+		return '#'+Math.floor(Math.random()*0xffffff).toString(16);
+	}
+	var oUl = document.querySelector('.father');
+	var aLi = oUl.children;
+	var len = aLi.length;
+	for (var i = 0; i < len; i++) {
+		aLi[i].style.background = randomBg();
+	}
+	oUl.addEventListener('click',show,false);
+	function show(ev){
+		var ev = ev || window.ev;
+		var target = ev.target||ev.srcElement;
+		console.log(target);
+
+		if (target.nodeName.toLowerCase() === 'li'){
+          console.log(target.innerHTML);
+          for (var i = 0; i < len; i++) {
+          	aLi[i].style.color='black';
+          }
+          target.style.color='yellow';
+		}
+	}
+
+
+</script>

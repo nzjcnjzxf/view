@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>drag</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.content{
+			width: 500px;
+			margin: 100px auto;
+			border: 1px solid #000;
+		}
+		#box li{
+			width: 500px;
+			height: 50px;
+			line-height: 50px;
+			text-align: center;
+			font-size: 20px;
+			color: #000;
+			list-style: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="content">
+		<ul id="box">
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+			<li>6</li>
+			<li>7</li>
+			<li>8</li>
+		</ul>
+	</div>
+</body>
+</html>
+<script>
+			// 将元素插入在目标元素的后面
+			function insertAfter(newElement,targetElement){
+				var parentElement = targetElement.parentNode;
+				if(parentElement.lastChild == targetElement){
+					parentElement.appendChild(newElement);
+				}else{
+					parentElement.insertBefore(newElement,targetElement.nextSibling);
+				}
+			}
+	        function bg1(){
+	            return '#'+Math.floor(Math.random()*0xffffff).toString(16);
+	        }
+	        function bg2(){
+	            var r=Math.floor(Math.random()*256);
+	            var g=Math.floor(Math.random()*256);
+	            var b=Math.floor(Math.random()*256);
+	            //return "rgb("+r+','+g+','+b+")";//所有方法的拼接都可以用ES6新特性`其他字符串{$变量名}`替换
+	     		return `rgb(${r},${g},${b})`;
+	        }
+	       var oUl = document.getElementById('box');
+	       var aLi = oUl.children;
+	       var len = aLi.length;
+	       var currentIndex = 0;
+	       function sort(){
+	       for (var i = 0; i < len; i++) {
+	         aLi[i].index = i;
+             aLi[i].draggable = 'true';
+             aLi[i].style.background=bg1();
+	       	// 自身的事件
+	       	 aLi[i].ondragstart = function(ev){
+	       	 	console.log('start');
+	       	 	var ev = window.event || ev;
+	       	 	ev.dataTransfer.setData('data',this.innerHTML);
+	       	 	currentIndex = this.index;
+	       	 } 
+	       	 // 在目标上的时候
+	       	 aLi[i].ondragover=function(ev){
+	       	 	var ev = window.event || ev;
+	       	 	ev.preventDefault();
+	       	 }
+	       	 aLi[i].ondragenter=function(){
+	       	 	for (var i = 0; i < len; i++) {
+	       	 		aLi[i].style.border= 'none';
+	       	 	}
+	       	 	if (currentIndex != this.index){
+	       	 	  this.style.border = '2px solid red';	
+	       	 	}
+	       	 }
+	       	 aLi[i].ondragleave=function(){
+	       	 	console.log('dragleave');
+	       	 }
+	       	  aLi[i].ondrop=function(ev){
+	       	  	var ev = window.event || ev;
+	       	  	oUl.insertBefore(aLi[currentIndex],this);
+	       	  	insertAfter(aLi[currentIndex],this);
+	       	  	this.style.border='none';
+	       	  	sort();
+	       	 }
+	       }
+	   }
+	   sort();
+
+</script>
+
+
