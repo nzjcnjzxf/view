@@ -1,0 +1,63 @@
+body {
+  background: #e94a48;
+  overflow: hidden;
+  height: 100%; }
+
+.container {
+  position: relative;
+  width: 7rem;
+  height: 100%;
+  margin: 1.22rem .25rem 0 .25rem;
+  padding-top: 1rem;
+  background: #fff;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+  .container .head {
+    position: absolute;
+    width: 4.81rem;
+    height: 2.19rem;
+    left: 50%;
+    background: url("../images/title3.png") no-repeat;
+    background-size: cover;
+    -webkit-transform: translate(-50%, -100%);
+            transform: translate(-50%, -100%); }
+  .container .count, .container .pay {
+    width: 6.17rem;
+    height: .98rem;
+    font-size: .34rem;
+    margin: 0 auto;
+    line-height: .98rem;
+    border-bottom: .01rem solid #ccc; }
+  .container .count .num {
+    font-size: .3rem;
+    color: #999; }
+  .container .pay .go {
+    font-size: .3rem;
+    color: #999; }
+  .container .wrapper {
+    width: 6.17rem;
+    margin: 0 auto; }
+    .container .wrapper .record {
+      font-size: .34rem;
+      height: 1rem;
+      line-height: 1rem; }
+    .container .wrapper .list li {
+      margin-bottom: .38rem; }
+      .container .wrapper .list li .index {
+        width: .43rem;
+        height: .43rem;
+        color: #fff;
+        font-size: .34rem;
+        text-align: center;
+        background: #ffbcb9; }
+      .container .wrapper .list li .pic {
+        margin: 0 .35rem; }
+        .container .wrapper .list li .pic img {
+          display: block;
+          width: 1.64rem;
+          height: 1.48rem; }
+      .container .wrapper .list li .detail {
+        font-size: .32rem;
+        width: 3.35rem; }
+        .container .wrapper .list li .detail .people {
+          padding: .05rem 0; }

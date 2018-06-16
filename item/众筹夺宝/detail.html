@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>detail</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/detail.css">
+    <script src="js/rem.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="head"></div>
+        <div class="wrapper clearfix">
+            <div class="left fl">
+                <img src="images/cup3.png">
+            </div>
+            <div class="right fl">
+                <p>时间：2017-12-25</p>
+                <p class="count">抽奖人数：5人</p>
+                <p>中奖者：微信昵称3</p>
+            </div>
+        </div>
+        <table>
+            <tr>
+                <th>抽奖者ID</th>
+                <th>投入众筹币数</th>
+            </tr>
+            <tr>
+                <td>微信昵称1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>微信昵称2</td>
+                <td>2</td>
+            </tr>
+            <tr class="active">
+                <td>微信昵称3</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>微信昵称4</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>微信昵称5</td>
+                <td>1</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+<script src="js/preMove.js"></script>
+<script>
+    preMove('.container');
+</script>

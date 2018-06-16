@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>person</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/person.css">
+    <script src="js/rem.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="head"></div>
+        <div class="clearfix count">
+            <div class="fl">众筹币个数</div>
+            <div class="fr num">10个</div>
+        </div>
+        <div class="clearfix pay">
+            <div class="fl">充值众筹币</div>
+            <div class="fr go">去充值 &nbsp;></div>
+        </div>
+        <div class="wrapper">
+            <div class="record">
+                抽奖纪录
+            </div>  
+            <ul class="list">
+                <li class="clearfix">
+                    <div class="index fl">3</div>
+                    <div class="pic fl">
+                        <img src="images/cup3.png">
+                    </div>
+                    <div class="detail fl">
+                        <p class="time">时间：2017-12-25</p>
+                        <p class="people">抽奖人数：6人</p>
+                        <p class="winner">中奖者：moumoumou</p>
+                    </div>
+                </li>
+                <li class="clearfix">
+                    <div class="index fl">2</div>
+                    <div class="pic fl">
+                        <img src="images/cup3.png">
+                    </div>
+                    <div class="detail fl">
+                        <p class="time">时间：2017-12-25</p>
+                        <p class="people">抽奖人数：6人</p>
+                        <p class="winner">中奖者：moumoumou</p>
+                    </div>
+                </li>
+                <li class="clearfix">
+                    <div class="index fl">1</div>
+                    <div class="pic fl">
+                        <img src="images/cup3.png">
+                    </div>
+                    <div class="detail fl">
+                        <p class="time">时间：2017-12-25</p>
+                        <p class="people">抽奖人数：6人</p>
+                        <p class="winner">中奖者：moumoumou</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 遮盖 -->
+    <div class="mask">
+        <div class="alert">
+            <div class="title">充值</div>
+            <div class="wrapper">
+                <a class="integral">
+                    <p class="pig">
+                        <img src="images/pig4.png">
+                    </p>
+                    <p class="des">
+                        积分充值
+                    </p>
+                </a>
+                <a class="wechat">
+                    <p class="wx-icon">
+                        <img src="images/weixin4.png">
+                    </p>
+                    <p class="des">微信支付</p>
+                </a>
+            </div>
+            <div>
+                <a class="cancle" href="#">取消</a>
+            </div>
+        </div>
+    </div>
+    <!-- 确定 -->
+    <div class="sure">
+        <div class="message">消息</div>
+        <div class="hint">
+            <p class="hint-content">不能超过3个</p>
+            <p class="btn">我知道了</p>
+        </div>
+    </div>
+<script src="libs/zepto.js"></script>
+<script src="libs/event.js"></script>
+<script src="libs/fx.js"></script>
+<script src="js/preMove.js"></script>
+</body>
+</html>
+<script>
+ $(function(){
+    preMove('body');
+     preMove('.container');
+     preMove('.mask');
+     preMove('.alert');
+     preMove('.sure');
+    // 双击的时候取消
+    document.querySelector('.mask').ondblclick=function(){
+        console.log(1);
+        return false;
+        
+    }
+    // 去支付
+  $('.go').click(function(){
+        $('.mask').show();
+        $('.alert').show();
+    })
+ // 积分支付
+  $('.integral').click(function () {
+      $('.sure').show();
+      $('.alert').hide();
+      $('.hint-content').html('暂时还不支持，请使用微信支付');
+  })
+//确定
+$('.btn').click(function(){
+    $('.sure').hide();
+    $('.alert').show();
+    $('.hint-content').html('不能超过3个');
+})
+  // 微信支付
+  $('.wechat').click(function () {
+      window.location.href='./success.html';
+  })
+  // 取消
+  $('.cancle').click(function () {
+      $('alert').hide();
+      $('.mask').hide();
+  })
+  //点击跳转到详情页
+ $('.list > li').click(function(){
+     window.location.href='./detail.html';
+ })
+ })  
+</script>

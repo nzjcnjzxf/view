@@ -1,0 +1,152 @@
+@charset "UTF-8";
+/*初始化*/
+* {
+  margin: 0;
+  padding: 0;
+  /*点击高亮效果清除*/
+  -webkit-tap-highlight-color: transparent;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+}
+
+/*公共样式*/
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.clearfix::before,
+.clearfix::after {
+  content: ".";
+  display: block;
+  height: 0;
+  line-height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+html, body {
+  height: 100%;
+}
+
+/* 遮盖 */
+.mask {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+}
+.mask .alert {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 5.66rem;
+  height: 3.75rem;
+  background: #fff;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+.mask .alert .title {
+  width: 100%;
+  height: 1.03rem;
+  line-height: 1.03rem;
+  text-align: center;
+  font-size: .32rem;
+  border-bottom: .01rem solid #666;
+}
+.mask .alert .wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+.mask .alert .wrapper .integral,
+.mask .alert .wrapper .wechat {
+  float: left;
+  width: 2.06rem;
+  height: 1.07rem;
+  margin: .35rem;
+  font-size: .3rem;
+  text-align: center;
+  border-radius: .05rem;
+  border: .01rem solid #f89341;
+}
+.mask .alert .wrapper .integral img,
+.mask .alert .wrapper .wechat img {
+  display: block;
+  width: .41rem;
+  height: .41rem;
+  margin: .1rem auto;
+}
+.mask .alert .cancle {
+  position: absolute;
+  right: .4rem;
+  bottom: .3rem;
+  font-size: .3rem;
+  color: #f89341;
+}
+
+.sure, .at-once, .integral-btn {
+  display: none;
+  z-index: 10;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4.43rem;
+  height: 3.1rem;
+  background: #fff;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+.sure .message, .at-once .message, .integral-btn .message {
+  width: 4.43rem;
+  height: .83rem;
+  margin: 0 auto;
+  line-height: .83rem;
+  font-size: .34rem;
+  font-weight: bold;
+  text-align: center;
+  color: #666;
+  border-bottom: 1px solid #d8d8d8;
+}
+.sure .hint, .at-once .hint, .integral-btn .hint {
+  width: 100%;
+}
+.sure .hint .hint-content, .at-once .hint .hint-content, .integral-btn .hint .hint-content {
+  height: 1.3rem;
+  padding: 0 .2rem;
+  margin-top: .2rem;
+  text-align: center;
+  font-size: .3rem;
+  font-weight: bold;
+  color: #333;
+}
+.sure .hint .btn, .sure .hint .btn-go, .sure .hint .btn-know, .at-once .hint .btn, .at-once .hint .btn-go, .at-once .hint .btn-know, .integral-btn .hint .btn, .integral-btn .hint .btn-go, .integral-btn .hint .btn-know {
+  position: absolute;
+  bottom: 0.2rem;
+  left: 50%;
+  width: 1.63rem;
+  height: .59rem;
+  padding: 0 .1rem;
+  text-align: center;
+  line-height: .59rem;
+  font-size: .3rem;
+  border-radius: 3px;
+  color: #fff;
+  background: #e94a48;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+}

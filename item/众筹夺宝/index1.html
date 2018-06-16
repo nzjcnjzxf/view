@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<title>index</title>
+	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/index1.css">
+	<script src="js/rem.js"></script>
+</head>
+<body>
+ <div class="container">
+	<div class="current-count">当前众筹币 <span class="num">0</span>个</div>
+	<div class="message">
+		 说明：每人每轮最少投 入一个众筹币，最多不 能超过三个众筹币。。
+	</div>
+	<div class="input">
+		<a class="minus-btn"></a>
+		<span class="count">1</span>
+		<a class="add-btn"></a>
+	</div>
+	<div>
+		<a class="person-center" href="person.html"></a>
+	</div>
+	<div>
+		 <a class="join" href="#">立即参加</a> 
+	</div>
+ </div>
+ <!-- 遮盖 -->
+ <div class="mask">
+	 <div class="alert">
+		 <div class="title">充值</div>
+		 <div class="wrapper">
+			 <a class="integral">
+				<p class="pig">
+					<img src="images/pig4.png">
+				</p>
+				<p class="des">
+					积分充值
+				</p>
+			 </a>
+			 <a class="wechat">
+				 <p class="wx-icon">
+					 <img src="images/weixin4.png">
+				 </p>
+				 <p class="des">微信支付</p>
+			 </a>
+		 </div>
+		 <div>
+			 <a class="cancle" href="#">取消</a>
+		 </div>
+	 </div>
+ </div>
+ <!-- 确定按钮 -->
+<div class="sure">
+	<div class="message">提示</div>
+	<div class="hint">
+		<p class="hint-content">不能超过3个</p>
+		<p class="btn">确定</p>
+	</div>
+</div>
+<!-- 立即前往 -->
+<div class="at-once">
+	<div class="message">提示</div>
+	<div class="hint">
+		<p class="hint-content">您的众筹币不够，请充值</p>
+		<p class="btn-go">立即前往</p>
+	</div>
+</div>
+<!-- 积分按钮 -->
+<div class="integral-btn">
+	<div class="message">提示</div>
+	<div class="hint">
+		<p class="hint-content">暂时还不支持，请使用微信支付</p>
+		<p class="btn-know">我知道了</p>
+	</div>
+</div>
+ <script src="libs/zepto.js"></script>
+ <script src="libs/event.js"></script>
+ <script src="libs/fx.js"></script>
+<script src="js/preMove.js"></script>
+<script src="js/index1.js"></script>	
+</body>
+</html>
+<script>
+	$(function(){
+		preMove('.container');
+		preMove('.mask');
+		preMove('.alert');
+		preMove('.sure');
+		preMove('.at-once');
+		preMove('.integral-btn');
+		// 立即参加
+		$('.join').click(function(){
+			$('.mask').show();
+			$('.at-once').show();
+		})
+		$('.btn-go').click(function(){
+			$('.at-once').hide();
+			$('.alert').show();
+		})
+		// 积分支付
+		 $('.integral').click(function () {
+		     $('.alert').hide();
+		 	 $('.integral-btn').show();
+		 })
+		 //我知道了
+		 $('.btn-know').click(function(){
+		     $('.integral-btn').hide();
+		     $('.alert').show();
+		 })
+		   // 微信支付
+		   $('.wechat').click(function () {
+		       window.location.href='./success.html';
+		   })
+		   // 取消
+		   $('.cancle').click(function () {
+		       $('.alert').hide();
+		       $('.mask').hide();
+		   })
+		// 数量超出提示
+		   $('.btn').click(function(){
+			   $('.mask').hide();
+			   $('.sure').hide();
+			})
+
+		var btnLeft = $('.minus-btn');
+		var btnRight = $('.add-btn');
+		var count = 1;
+		
+		// 左边按钮
+		btnLeft.click(function(){
+			count--;
+			if(count<1){
+				count=1;
+				return;
+			}
+			$('.count').html(count);
+		})
+		// 右边按钮
+		btnRight.click(function(){
+			count++;
+			if(count>3){
+				count=3;
+				$('.mask').show();
+			    $('.sure').show();
+				return ;
+			}
+			$('.count').html(count);
+		})
+	})
+</script>

@@ -1,0 +1,28 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: url("../images/sucess.png") no-repeat;
+  background-size: 100% 100%; }
+  .container .pay {
+    position: absolute;
+    top: 4.67rem;
+    left: 50%;
+    font-size: .37rem;
+    letter-spacing: .02rem;
+    color: #fceeee;
+    -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0); }
+  .container .back {
+    display: block;
+    position: absolute;
+    left: 1.24rem;
+    bottom: 2.04rem;
+    width: 5.02rem;
+    height: .83rem;
+    font-size: .32rem;
+    text-align: center;
+    line-height: .83rem;
+    border-radius: .1rem;
+    color: #fceeee;
+    background: #e94a48; }
