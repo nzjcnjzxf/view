@@ -1,0 +1,2 @@
+webpackJsonp([13],{f99o:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var l={components:{},mounted:function(){this.$api.requestCat().then(function(e){console.log(e)})}},o={render:function(){var e=this.$createElement,t=this._self._c||e;return t("div",[t("mt-header",{staticStyle:{background:"#eee",color:"black"},attrs:{fixed:"",title:"我的收藏"}})],1)},staticRenderFns:[]},r=n("vSla")(l,o,!1,null,null,null);t.default=r.exports}});
+//# sourceMappingURL=13.30ba70d5ddc79c88d784.js.map
