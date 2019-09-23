@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        query httprequest
+    </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .box {
+            display: inline-block;
+        }
+
+        .list-item {
+            margin: 10px 0;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    </meta>
+</head>
+
+<body>
+    <div id="app" class="box">
+        <div class="content">
+            {{content}}
+        </div>
+        <div class="list-item">
+            请求类型：
+            <label v-for="(item,index) in typeData" :key="index">
+                <input type="radio" name="type" :value="item.value" v-model="type">{{item.value}}
+            </label>
+        </div>
+        <div class="list-item">
+            请求头：
+            <label v-for="(item,index) in dataTypeData" :key="index">
+                <input checked="false" type="radio" name="dataType" :value="item.value"
+                    v-model="dataType">{{item.value}}
+            </label>
+        </div>
+        <div class="list-item">
+            超时时间：<input type="number" v-model.number="timeout">
+        </div>
+        <div class="list-item" v-for="(item,index) in list" :key="index">
+            <span style="display: inline-block;width: 130px">{{item.label}}：</span>
+            <input type="text" v-model="item.name" v-if="index > 0" placeholder="请输入参数名称">
+            <input type="text" v-model="item.value" :placeholder="index > 0?'请输入参数的值' :'请输入请求地址'">
+            <button v-if="index === list.length - 1" @click="add(index)">添加字段</button>
+        </div>
+
+        <!-- get请求 -->
+        <!-- post请求 -->
+        <button id="btn">请求</button>
+        <button @click="location.reload()">刷新</button>
+    </div>
+    <script type="text/javascript">
+        var app = new Vue({
+            el: '#app',
+            data: {
+                content: 'neirong',
+                typeData: [{
+                        value: 'get'
+                    },
+                    {
+                        value: 'post'
+                    },
+                    {
+                        value: 'put'
+                    },
+                    {
+                        value: 'delete'
+                    }
+                ],
+                dataTypeData: [{
+                        value: 'application/x-www-form-urlencoded'
+                    },
+                    {
+                        value: 'application/json'
+                    },
+                    {
+                        value: 'multipart/form-data'
+                    }
+                ],
+                type: 'get',
+                dataType: 'application/json',
+                timeout: 6000,
+                list: [{
+                    label: '请输入请求地址',
+                    value: 'http://localhost:3000/test'
+                }]
+            },
+            methods: {
+                add(index) {
+                    this.list.push({
+                        label: '参数' + (index + 1),
+                        name: '',
+                        value: ''
+                    })
+                }
+            }
+        })
+        /*
+            请求传参方式
+            1、在url的问号后面  ?a=1&b=2
+            2、body 中  {a: 1, b: 2}
+            3、路由后面  /1
+            4、如果为formdata 格式 则传参方式为 a=1&b=2
+            arr = [
+                {
+                    name: a,
+                    value: 2
+                },
+                {
+                    name: b,
+                    value: 2
+                }
+            ]
+            a=2&b=2
+         var b = ''
+         arr.forEach(item => {
+            b+= `${item.name}=${item.value}&`
+         })
+         b.slice(0,-1)
+        */
+        $('#btn').click(function () {
+            const url = app.list[0].value
+            const type = app.type
+            const dataType = app.dataType
+            const timeout = app.timeout
+            const params = app.list.slice(1)
+            const a = params.filter(item => item.name && item.value)
+            console.log(data)
+            var xhr = new XMLHttpRequest();
+            xhr.open(type, url);
+            xhr.responseType = 'json';
+            xhr.onload = function () {
+                console.log(xhr.response);
+            }
+            xhr.onerror = function () {
+                console.log('xhr error');
+            }
+            xhr.send(data);
+        })
+    </script>
+</body>
+
+</html>
