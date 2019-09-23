@@ -34,6 +34,9 @@
         .list-item {
             margin: 10px 0;
         }
+        input[type="text"] {
+            width: 200px;
+        }
     </style>
     <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js">
     </script>
@@ -43,9 +46,12 @@
 
 <body>
     <div id="app" class="box">
+        <h1>请求结果：</h1>
+        --------------------------------------------------
         <div class="content">
             {{content}}
         </div>
+        --------------------------------------------------
         <div class="list-item">
             请求类型：
             <label v-for="(item,index) in typeData" :key="index">
@@ -59,9 +65,6 @@
                     v-model="dataType">{{item.value}}
             </label>
         </div>
-        <div class="list-item">
-            超时时间：<input type="number" v-model.number="timeout">
-        </div>
         <div class="list-item" v-for="(item,index) in list" :key="index">
             <span style="display: inline-block;width: 130px">{{item.label}}：</span>
             <input type="text" v-model="item.name" v-if="index > 0" placeholder="请输入参数名称">
@@ -71,14 +74,14 @@
 
         <!-- get请求 -->
         <!-- post请求 -->
-        <button id="btn">请求</button>
+        <button id="btn" @click="ask">请求</button>
         <button @click="location.reload()">刷新</button>
     </div>
     <script type="text/javascript">
         var app = new Vue({
             el: '#app',
             data: {
-                content: 'neirong',
+                content: '结果！',
                 typeData: [{
                         value: 'get'
                     },
@@ -93,21 +96,17 @@
                     }
                 ],
                 dataTypeData: [{
-                        value: 'application/x-www-form-urlencoded'
+                        value: 'text'
                     },
                     {
-                        value: 'application/json'
-                    },
-                    {
-                        value: 'multipart/form-data'
+                        value: 'json'
                     }
                 ],
                 type: 'get',
-                dataType: 'application/json',
-                timeout: 6000,
+                dataType: 'json',
                 list: [{
                     label: '请输入请求地址',
-                    value: 'http://localhost:3000/test'
+                    value: 'http://localhost:8000/test'
                 }]
             },
             methods: {
@@ -117,6 +116,138 @@
                         name: '',
                         value: ''
                     })
+                },
+                ask() {
+                    const data =this.handleParams()
+                    const url = this.list[0].value
+                    const method = this.type
+                    const headers = this.dataType
+                    this.myAjax(method, url, data,(res) => {
+                        console.log(res)
+                        this.content = JSON.stringify(res)
+                    }, this.dataType)
+                   
+                },
+                handleParams() {
+                    const data = this.list.filter(item => item.name && item.value)
+                    const params = {}
+                    data.forEach(item => {
+                        params[item.name] = item.value
+                    })
+                    return params
+                },
+                handleFormParams(params) {
+                    let formParams = ''
+                    for (const key in params) {
+                        if (params.hasOwnProperty(key)) {
+                            formParams += `${key}=${params[key]}&`
+                        }
+                    }
+                    return formParams.slice(0, -1)
+                },
+                /*
+                    url
+                    data
+                    headers
+                    method
+                    this.request({
+                        url,
+                        data,
+                        headers,
+                        method,
+                    }).then(res => {
+                        console.log(res)
+                    })
+                */
+                request(options) {
+                    // Default options are marked with *
+                    return fetch(options.url, {
+                            body: JSON.stringify(options.data), // must match 'Content-Type' header
+                            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                            credentials: 'same-origin', // include, same-origin, *omit
+                            headers: {
+                                'content-type': options.headers || 'application/json'
+                            },
+                            method: options.method || 'GET', // *GET, POST, PUT, DELETE, etc.
+                            mode: 'cors', // no-cors, cors, *same-origin
+                            redirect: 'follow', // manual, *follow, error
+                            referrer: 'no-referrer', // *client, no-referrer
+                        })
+                        .catch(error => console.error('Error:', error))
+                        .then(response => response.json()) // parses response to JSON
+                },
+                /*
+                 *封装一个自己的ajax函数
+                 *有5个参数，最后一个参数可选
+                 *
+                 * @param method(必选)    请求类型  get 和 post
+                 * @param url(必选)       请求的url地址   相同域名下的页面（此函数不支持跨域请求）
+                 * @param data(必选)      请求协带的数据  以js对象的形式定义，如：{name:'张三'}
+                 * @param callback(必选)  回调函数,可接收一个参数，这个参数就是服务器响应的数据
+                 * @param type(可选)      指定服务器响应的数据类型（可选值：json,xml,text），如果是json模式，则使用json解析数据，默认为text普通字符串
+                 */
+                myAjax(method, url, data, callback, type) {
+                    //创建兼容 XMLHttpRequest 对象
+                    var xhr;
+                    if (window.XMLHttpRequest) { //IE7+, Firefox, Chrome, Opera, Safari
+                        xhr = new XMLHttpRequest();
+                    } else { // code for IE6, IE5
+                        xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+
+                    //给请求添加状态变化事件处理函数
+                    xhr.onreadystatechange = function () {
+                        //判断状态码
+                        if (xhr.status == 200 && xhr.readyState == 4) {
+                            //根据type参数，判断返回的内容需要进行怎样的处理
+                            if (type == 'json') {
+                                //获得 json 形式的响应数据，并使用parse方法解析
+                                var res = JSON.parse(xhr.responseText);
+                            } else if (type == 'xml') {
+                                //获得 XML 形式的响应数据
+                                var res = responseXML;
+                            } else {
+                                //获得字符串形式的响应数据
+                                var res = xhr.responseText;
+                            }
+                            //调用回调函数,并将响应数据传入回调函数
+                            callback(res);
+                        }
+                    };
+
+                    //判断data是否有数据
+                    var param = '';
+                    //这里使用stringify方法将js对象格式化为json字符串
+                    if (JSON.stringify(data) != '{}') {
+                        url += '?';
+                        for (var i in data) {
+                            param += i + '=' + data[i] + '&'; //将js对象重组，拼接成url参数存入param变量中
+                        }
+                        //使用slice函数提取一部分字符串，这里主要是为了去除拼接的最后一个&字符
+                        //slice函数：返回一个新的字符串。包括字符串从 start 开始（包括 start）到 end 结束（不包括 end）为止的所有字符。
+                        param = param.slice(0, param.length - 1);
+                    }
+
+                    //判断method是否为get
+                    if (method == "get") {
+                        //是则将数据拼接在url后面
+                        url = url + param;
+                    }
+
+
+                    //初始化请求
+                    xhr.open(method, url, true);
+
+                    //如果method == post
+                    if (method == "post") {
+                        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                        //发送请求
+                        xhr.send(param);
+                    } else {
+                        //发送请求
+                        xhr.send(null);
+                    }
+
                 }
             }
         })
@@ -143,25 +274,25 @@
          })
          b.slice(0,-1)
         */
-        $('#btn').click(function () {
-            const url = app.list[0].value
-            const type = app.type
-            const dataType = app.dataType
-            const timeout = app.timeout
-            const params = app.list.slice(1)
-            const a = params.filter(item => item.name && item.value)
-            console.log(data)
-            var xhr = new XMLHttpRequest();
-            xhr.open(type, url);
-            xhr.responseType = 'json';
-            xhr.onload = function () {
-                console.log(xhr.response);
-            }
-            xhr.onerror = function () {
-                console.log('xhr error');
-            }
-            xhr.send(data);
-        })
+        // $('#btn').click(function () {
+        // const url = app.list[0].value
+        // const type = app.type
+        // const dataType = app.dataType
+        // const timeout = app.timeout
+        // const params = app.list.slice(1)
+        // const a = params.filter(item => item.name && item.value)
+        // console.log(data)
+        // var xhr = new XMLHttpRequest();
+        // xhr.open(type, url);
+        // xhr.responseType = 'json';
+        // xhr.onload = function () {
+        //     console.log(xhr.response);
+        // }
+        // xhr.onerror = function () {
+        //     console.log('xhr error');
+        // }
+        // xhr.send(data);
+        // })
     </script>
 </body>
 
