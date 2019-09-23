@@ -219,7 +219,6 @@
                     var param = '';
                     //这里使用stringify方法将js对象格式化为json字符串
                     if (JSON.stringify(data) != '{}') {
-                        url += '?';
                         for (var i in data) {
                             param += i + '=' + data[i] + '&'; //将js对象重组，拼接成url参数存入param变量中
                         }
@@ -230,6 +229,7 @@
 
                     //判断method是否为get
                     if (method == "get") {
+                        url += '?';
                         //是则将数据拼接在url后面
                         url = url + param;
                     }
@@ -240,9 +240,14 @@
 
                     //如果method == post
                     if (method == "post") {
-                        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                        if(type === 'json') {
+                            xhr.setRequestHeader("Content-Type", "application/json");
+                            xhr.send(JSON.stringify(data))
+                        } else {
+                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                            xhr.send(param);
+                        }
                         //发送请求
-                        xhr.send(param);
                     } else {
                         //发送请求
                         xhr.send(null);
