@@ -19,6 +19,6 @@ app.put('/test', function (req, res) {
     res.json(req.body)
 })
 
-app.listen(8000)
+app.listen(8000, '0.0.0.0')
 
 console.log('sever run at http://localhost:8000')

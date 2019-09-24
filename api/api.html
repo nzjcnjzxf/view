@@ -34,6 +34,12 @@
         .list-item {
             margin: 10px 0;
         }
+
+        .content {
+            word-break: break-all;
+            max-width: 600px;
+        }
+
         input[type="text"] {
             width: 200px;
         }
@@ -41,6 +47,7 @@
     <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     </meta>
 </head>
 
@@ -52,6 +59,12 @@
             {{content}}
         </div>
         --------------------------------------------------
+        <div class="list-item">
+            请求方式：
+            <label v-for="(item,index) in askTypeArr" :key="index">
+                <input type="radio" name="askType" :value="item.value" v-model="askType">{{item.value}}
+            </label>
+        </div>
         <div class="list-item">
             请求类型：
             <label v-for="(item,index) in typeData" :key="index">
@@ -67,8 +80,8 @@
         </div>
         <div class="list-item" v-for="(item,index) in list" :key="index">
             <span style="display: inline-block;width: 130px">{{item.label}}：</span>
-            <input type="text" v-model="item.name" v-if="index > 0" placeholder="请输入参数名称">
-            <input type="text" v-model="item.value" :placeholder="index > 0?'请输入参数的值' :'请输入请求地址'">
+            <input type="text" v-model="item.name" :placeholder="index>0?'请输入参数名称':'请输入请求地址'">
+            <input type="text" v-model="item.value" :placeholder="index > 0?'请输入参数的值' :'请输入请求路由'">
             <button v-if="index === list.length - 1" @click="add(index)">添加字段</button>
         </div>
 
@@ -82,6 +95,13 @@
             el: '#app',
             data: {
                 content: '结果！',
+                askTypeArr: [{
+                        value: 'axios'
+                    },
+                    {
+                        value: 'ajax'
+                    },
+                ],
                 typeData: [{
                         value: 'get'
                     },
@@ -96,17 +116,19 @@
                     }
                 ],
                 dataTypeData: [{
-                        value: 'text'
+                        value: 'application/x-www-form-urlencoded'
                     },
                     {
-                        value: 'json'
+                        value: 'application/json'
                     }
                 ],
                 type: 'get',
-                dataType: 'json',
+                dataType: 'application/json',
+                askType: 'ajax',
                 list: [{
                     label: '请输入请求地址',
-                    value: 'http://localhost:8000/test'
+                    name: 'http://localhost:8000',
+                    value: '/test'
                 }]
             },
             methods: {
@@ -118,18 +140,22 @@
                     })
                 },
                 ask() {
-                    const data =this.handleParams()
-                    const url = this.list[0].value
-                    const method = this.type
-                    const headers = this.dataType
-                    this.myAjax(method, url, data,(res) => {
-                        console.log(res)
-                        this.content = JSON.stringify(res)
-                    }, this.dataType)
-                   
+                    switch (this.askType) {
+                        case 'ajax':
+                            this.ajaxReqest()
+                            break;
+                        case 'fetch':
+                            this.fetchRequest()
+                            break;
+                        case 'axios':
+                            this.axiosRequest()
+                            break;
+                        default:
+                            console.log('发起请求')
+                    }
                 },
                 handleParams() {
-                    const data = this.list.filter(item => item.name && item.value)
+                    const data = this.list.slice(1).filter(item => item.name && item.value)
                     const params = {}
                     data.forEach(item => {
                         params[item.name] = item.value
@@ -150,14 +176,7 @@
                     data
                     headers
                     method
-                    this.request({
-                        url,
-                        data,
-                        headers,
-                        method,
-                    }).then(res => {
-                        console.log(res)
-                    })
+                  
                 */
                 request(options) {
                     // Default options are marked with *
@@ -200,12 +219,9 @@
                         //判断状态码
                         if (xhr.status == 200 && xhr.readyState == 4) {
                             //根据type参数，判断返回的内容需要进行怎样的处理
-                            if (type == 'json') {
+                            if (type == 'application/json') {
                                 //获得 json 形式的响应数据，并使用parse方法解析
                                 var res = JSON.parse(xhr.responseText);
-                            } else if (type == 'xml') {
-                                //获得 XML 形式的响应数据
-                                var res = responseXML;
                             } else {
                                 //获得字符串形式的响应数据
                                 var res = xhr.responseText;
@@ -229,7 +245,9 @@
 
                     //判断method是否为get
                     if (method == "get") {
-                        url += '?';
+                        if (param) {
+                            url += '?';
+                        }
                         //是则将数据拼接在url后面
                         url = url + param;
                     }
@@ -240,7 +258,7 @@
 
                     //如果method == post
                     if (method == "post") {
-                        if(type === 'json') {
+                        if (type === 'application/json') {
                             xhr.setRequestHeader("Content-Type", "application/json");
                             xhr.send(JSON.stringify(data))
                         } else {
@@ -253,6 +271,44 @@
                         xhr.send(null);
                     }
 
+                },
+                fetchRequest() {
+                    const data = this.handleParams()
+                    const url = this.list[0].name + this.list[0].value
+                    const method = this.type
+                    const headers = this.dataType
+                    this.request({
+                        url,
+                        data,
+                        headers,
+                        method,
+                    }).then(res => {
+                        console.log(res)
+                    })
+                },
+                ajaxReqest() {
+                    const data = this.handleParams()
+                    const url = this.list[0].name + this.list[0].value
+                    const method = this.type
+                    const headers = this.dataType
+                    this.myAjax(method, url, data, (res) => {
+                        console.log(res)
+                        this.content = JSON.stringify(res)
+                    }, this.dataType)
+                },
+                axiosRequest() {
+                    axios({
+                        headers: {
+                            "Content-Type": this.dataType
+                        },
+                        method: this.type,
+                        baseURL: this.list[0].name,
+                        url: this.list[0].value,
+                        data: this.handleParams()
+                    }).then(res => {
+                        console.log(res)
+                        this.content = JSON.stringify(res)
+                    })
                 }
             }
         })
