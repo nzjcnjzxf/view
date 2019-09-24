@@ -1,0 +1,102 @@
+.login-container {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  background:  @primary-bg-color;
+  background: -webkit-linear-gradient(top,
+      @primary-bg-light-color,
+      @primary-bg-color );
+  background: -ms-linear-gradient(top,
+      @primary-bg-light-color,
+      @primary-bg-color );
+  background: -o-linear-gradient(top,
+      @primary-bg-light-color,
+      @primary-bg-color );
+  background: -moz-linear-gradient(top,
+      @primary-bg-light-color,
+      @primary-bg-color );
+  background: linear-gradient(top, @primary-bg-color, @primary-bg-light-color);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1, startColorstr=@primary-bg-light-color, endColorstr=@primary-bg-color);
+
+  .content {
+    width: 339px;
+    height: 323px;
+
+    .logo {
+      width: 100%;
+      height: 83px;
+      background: url("../images/logo_01.png");
+    }
+
+    .login-box {
+      position: relative;
+      width: 100%;
+      margin-top: 24px;
+      padding: 24px;
+      border-radius: @radius;
+      background: @white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      box-sizing: border-box;
+
+      .user-box,
+      .pwd-box {
+        position: relative;
+        height: 40px;
+        margin-bottom: 16px;
+
+        .img {
+          width: 32px;
+          height: 32px;
+          margin-top: 4px;
+        }
+
+        .input-box {
+          width: 241px;
+          height: 100%;
+          box-sizing: border-box;
+          border-radius: @radius;
+          border: 1px solid @border-color;
+        }
+
+        .input {
+          height: 36px;
+          line-height: 36px;
+          width: 212px;
+          margin-left: 8px;
+          background: @white;
+          border: none;
+          outline: none;
+          box-sizing: border-box;
+        }
+
+        .close-btn {
+          position: absolute;
+          right: 5px;
+          top: 12px;
+          width: 16px;
+          height: 16px;
+          cursor: pointer;
+        }
+      }
+
+      .login-btn {
+        height: 32px;
+        line-height: 32px;
+        margin-top: 40px;
+        text-align: center;
+        color: @white;
+        border-radius: @radius;
+        background-color: @primary-bg-color;
+        cursor: pointer;
+
+        &:hover {
+          background-color: @primary-color;
+        }
+
+        &:active {
+          background-color: @primary-bg-light-color;
+        }
+      }
+    }
+  }
+}

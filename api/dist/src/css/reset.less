@@ -1,0 +1,314 @@
+/* 初始化浏览器默认值 */
+body,
+div,
+p,
+form,
+ul,
+ol,
+dl,
+dt,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font: @font-size-normal/1.2em @font-family-global;
+	background-color: @body-bg;
+	color: @text-color-normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: @font-size-normal;
+	font-weight: normal;
+	line-height: 1em;
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+input,
+textarea,
+button {
+	box-sizing: border-box;
+	font-size: @font-size-normal;
+	font-family: @font-family-global;
+	margin: 0;
+	padding: 2px;
+	vertical-align: middle;
+}
+
+label {
+	cursor: pointer;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+	margin: 0 3px;
+}
+
+/*去掉X 去掉眼睛*/
+input::-ms-clear {
+	display: none;
+}
+
+input::-ms-reveal {
+	display: none;
+}
+
+/* for modern browsers */
+img {
+	border: none;
+	vertical-align: middle;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+td,
+th {
+	text-align: center;
+}
+
+/* 全局链接 */
+a {
+	text-decoration: none;
+	color: @text-color;
+}
+
+a:focus {
+	outline: none;
+}
+
+/*浮动和清除浮动*/
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right
+}
+
+.clearfix:after {
+	content: " ";
+	display: block;
+	clear: both;
+	height: 0;
+	visibility: hidden;
+}
+
+.clearfix {
+	zoom: 1;
+}
+
+/*位置样式*/
+.mg-r-12 {
+	margin-right: 12px;
+}
+
+.mg-l-10 {
+	margin-left: 10px;
+}
+
+/*文字内容*/
+.text-l {
+	text-align: left;
+}
+
+.text-c {
+	text-align: center;
+}
+
+.text-r {
+	text-align: right;
+}
+
+.ell {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/*两行显示超出隐藏*/
+.ie-two-line-show {
+	position: relative;
+	display: inline-block;
+	padding-right: 20px;
+	line-height: 20px;
+	font-size: 16px;
+	color: #333333;
+	text-align: left;
+	width: 100%;
+	max-height: 40px;
+	overflow: hidden;
+}
+
+.two-line-show {
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -ms-box;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+// .ie-two-line-show:after {
+// 	content: "...";
+// 	position: absolute;
+// 	bottom: 0;
+// 	right: 0;
+// 	background: #FFF;
+// }
+
+/*定位*/
+.ps-re {
+	position: relative;
+}
+
+.ps-ab {
+	position: absolute;
+}
+
+.ps-c {
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
+}
+
+/*显示隐藏*/
+.dis-hide {
+	display: none;
+}
+
+.dis-show {
+	display: block;
+}
+
+html,
+body {
+	overflow-y: hidden;
+	min-width: 1200px;
+	height: 100%;
+	background: @white;
+}
+
+.cp {
+	cursor: pointer;
+}
+
+.no-allow {
+	cursor: not-allowed;
+}
+
+.common-btn-default {
+	height: 32px;
+	padding: 0 20px;
+	font-size: @text-size;
+	text-align: center;
+	line-height: 30px;
+	color: @primary-color;
+	border-radius: @radius;
+	border: 1px solid @primary-color;
+	background-color: @white;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+
+.common-btn-primary {
+	height: 32px;
+	line-height: 30px;
+	padding: 0 20px;
+	font-size: @text-size;
+	text-align: center;
+	color: @white;
+	border-radius: @radius;
+	background-color: @primary-color;
+	cursor: pointer;
+}
+
+.common-input {
+	width: 224px;
+	height: 32px;
+	padding-left: 5px;
+	line-height: 22px;
+	font-size: 14px;
+	border: 1px solid @border-color;
+	border-radius: @radius;
+	box-sizing: border-box;
+	outline: 0;
+}
+
+.placeholder {
+	position: absolute;
+	top: 8px;
+	padding-left: 74px;
+	z-index: 10;
+	color: #888;
+}
+
+input[disabled] {
+	color: rgb(84, 84, 84);
+	background: rgb(235, 235, 228);
+	cursor: not-allowed;
+	opacity: 1
+}
+
+/*模拟输入框的 placeholder*/
+.input-wrap {
+	position: relative;
+	width: 224px;
+	height: 32px;
+	font-size: @font-size;
+	line-height: 1;
+
+	.input {
+		width: 100%;
+		height: 100%;
+		padding-left: 5px;
+		font-size: @font-size;
+		box-sizing: border-box;
+		border: 1px solid @border-color;
+		outline: 0;
+		border-radius: @radius;
+	}
+
+	.place-holder {
+		position: absolute;
+		left: 5px;
+		top: 50%;
+		margin-top: -7px;
+		color: #999;
+	}
+
+}
+
+tr:hover {
+	background: @table-bg-color;
+	td {
+		background: @table-bg-color;
+	}
+}

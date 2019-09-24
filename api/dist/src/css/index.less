@@ -1,0 +1,502 @@
+.admin-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    .left-nav {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 256px;
+        height: 100%;
+        background: @primary-color;
+        background: -webkit-linear-gradient(top,
+                @gradient-color-1,
+                @gradient-color-2 );
+        background: -ms-linear-gradient(top,
+                @gradient-color-1,
+                @gradient-color-2 );
+        background: -o-linear-gradient(top,
+                @gradient-color-1,
+                @gradient-color-2 );
+        background: -moz-linear-gradient(top,
+                @gradient-color-1,
+                @gradient-color-2 );
+        background: linear-gradient(top, @gradient-color-1, @gradient-color-2);
+        filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1, startColorstr=@gradient-color-1, endColorstr=@gradient-color-2);
+
+        .logo {
+            width: 187px;
+            height: 49px;
+            margin: 26px auto;
+
+            .logo-img {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+
+            .logo-img-mini {
+                display: none;
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        .nav-item {
+            height: 62px;
+            font-size: @text-size;
+            font-weight: bold;
+            line-height: 62px;
+            color: @white;
+            cursor: pointer;
+
+            .icon {
+                display: inline-block;
+                width: 22px;
+                height: 22px;
+                margin: 0 16px 0 25px;
+                vertical-align: middle;
+                background-size: 100% 100%;
+            }
+
+            .text {
+                vertical-align: middle;
+            }
+
+            .nav-1-icon {
+                margin-top: 6px;
+                background: url(../images/nav-1-white.png) no-repeat;
+            }
+
+            .nav-2-icon {
+                background: url(../images/nav-2-white.png) no-repeat;
+            }
+
+            .nav-3-icon {
+                margin-top: 6px;
+                background: url(../images/nav-3-white.png) no-repeat;
+            }
+        }
+
+        .active {
+            color: @black;
+            border-right: 2px solid #4c6b27;
+            background: @head-admin-bg;
+
+            .nav-1-icon {
+                background: url(../images/nav-1-black.png) no-repeat;
+            }
+
+            .nav-2-icon {
+                background: url(../images/nav-2-black.png) no-repeat;
+            }
+
+            .nav-3-icon {
+                background: url(../images/nav-3-black.png) no-repeat;
+            }
+        }
+    }
+
+    .right-content {
+        position: absolute;
+        top: 0;
+        left: 256px;
+        right: 0;
+        height: 100%;
+
+        .right-head {
+            height: 53px;
+            line-height: 53px;
+            background: @head-admin-bg;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+            .box-left {
+                margin-left: 24px;
+                cursor: pointer;
+
+                .change-icon {
+                    display: inline-block;
+                    padding: 5px;
+                }
+
+                .change-icon-1 {
+                    display: none;
+                    width: 25px;
+                    height: 20px;
+                }
+            }
+
+            .box-right {
+                vertical-align: middle;
+
+                .text {
+                    padding: 0 5px;
+                }
+
+                .span-box {
+                    margin-top: -10px;
+
+                    .person-icon {
+                        width: 18px;
+                        height: 20px;
+                    }
+
+                    .tc-icon {
+                        width: 20px;
+                        height: 20px;
+                        margin: 0 20px;
+                    }
+                }
+            }
+        }
+
+        .admin-content {
+            width: 100%;
+            overflow: auto;
+
+            .manage-content {
+                display: none;
+                height: 100%;
+                padding: 0 24px;
+
+                .common-head {
+                    padding: 24px 0;
+                    color: @black;
+                    font-weight: bold;
+                    line-height: @title-size;
+                    font-size: @title-size;
+                }
+
+                .common-top {
+                    height: 32px;
+                    line-height: 32px;
+
+                    .input-select,
+                    .input {
+                        width: 224px;
+                        height: 32px;
+                        line-height: 22px;
+                        font-size: 14px;
+                        border: 1px solid @border-color;
+                        border-radius: @radius;
+                        box-sizing: border-box;
+                        outline: 0;
+                    }
+
+                    .search-img {
+                        width: 21px;
+                        height: 21px;
+                        margin-top: 5px;
+                        cursor: pointer;
+                    }
+
+                    .add-btn {
+                        height: 32px;
+                        padding: 0 20px;
+                        font-size: @text-size;
+                        text-align: center;
+                        color: @white;
+                        border-radius: @radius;
+                        background-color: @primary-color;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            /*角色权限管理*/
+            .role-manage-container {
+                display: block;
+            }
+
+            /*口语名称检索管理*/
+            .oral-manage-container {
+
+                /*口语管理容器*/
+
+                /*口语新增容器*/
+                .oral-content-add {
+                    font-size: @text-size;
+                    color: @text-color;
+                    line-height: 32px;
+
+                    .add-title-box {
+                        height: 32px;
+
+                        .text-2 {
+                            margin: 0 24px 0 8px;
+                        }
+
+                        .text-3 {
+                            margin-right: 16px;
+                        }
+
+                        .select-zk {
+                            margin-right: 16px;
+                        }
+                    }
+
+                    .add-search-box {
+                        height: 32px;
+                        margin-top: 16px;
+
+                        .input-wrap {
+                            margin: 0 18px 0 16px;
+                        }
+
+                        .search-img {
+                            width: 21px;
+                            height: 21px;
+                        }
+                    }
+
+                    .oral-search-box {
+                        min-height: 134px;
+                    }
+
+                    .add-wrap {
+                        border-left: 1px solid @oral-border-color;
+                        border-right: 1px solid @oral-border-color;
+                    }
+
+                    .add-keyword {
+                        margin-top: 29px;
+                        padding: 16px 0 16px 24px;
+                        line-height: 16px;
+                        color: @black;
+                        background: @oral-bg-color;
+                        font-weight: bold;
+                    }
+
+                    .add-key-box {
+                        position: relative;
+                        height: 32px;
+                        margin-left: 24px;
+                        padding: 10px 0;
+
+                        .input-box {
+                            position: absolute;
+                            left: 80px;
+                            right: 50px;
+                            top: 8px;
+
+                            .input {
+                                width: 100%;
+                            }
+
+                            .place-holder {
+                                position: absolute;
+                                left: 5px;
+                                top: 50%;
+                                margin-top: -7px;
+                                font-size: @font-size;
+                                line-height: 1;
+                                color: @place-holder-color;
+                            }
+                        }
+
+                        .close-btn {
+                            position: absolute;
+                            right: 14px;
+                            top: 15px;
+                            width: 22px;
+                            height: 22px;
+                        }
+                    }
+
+                    .add-btn {
+                        padding: 24px 0 40px 0;
+                    }
+
+                    .add-btn-group {
+                        padding: 10px 0;
+                        line-height: 32px;
+                        border: 1px solid @oral-border-color;
+
+                        .add-sure,
+                        .add-cancel {
+                            display: inline-block;
+                            width: 100px;
+                            box-sizing: border-box;
+                        }
+
+                        .add-cancel {
+                            margin-right: 24px;
+                        }
+                    }
+
+                }
+
+                .nav-top {
+                    height: 50px;
+
+                    .nav-box {
+                        margin-right: -32px;
+                        border-bottom: 1px solid @border-color;
+
+                        .sub-nav-item {
+                            margin-right: 32px;
+                            padding: 12px 30px;
+                            line-height: 24px;
+                            font-size: @text-size;
+                            cursor: pointer;
+                        }
+
+                        .sub-item-last {
+                            margin-right: 0;
+                        }
+
+                        .sub-nav-item-active {
+                            color: @primary-color;
+                            border-bottom: 2px solid @primary-color;
+                        }
+                    }
+
+                    .btn-box {
+                        margin-top: 8px;
+
+                        .oral-name {
+                            height: 32px;
+                            margin-right: 16px;
+                            line-height: 32px;
+                            color: @oral-color;
+                            font-size: @text-size;
+                            text-align: left;
+                            text-decoration: underline;
+                        }
+
+                        .import-name,
+                        .export-name {
+                            margin-right: 8px;
+                        }
+                    }
+                }
+
+                .sub-content-box {
+                    margin-top: 16px;
+
+                    .sub-content {
+                        display: none;
+
+                        .search-box {
+                            margin-top: 20px;
+                            line-height: 32px;
+
+                            .search-img {
+                                width: 21px;
+                                height: 21px;
+                                margin-left: 10px;
+                                cursor: pointer;
+                            }
+
+                            .select-box {
+                                margin-bottom: 16px;
+                            }
+                        }
+                    }
+
+                    .sub-content-active {
+                        display: block;
+                    }
+                }
+            }
+
+            /*个人常用码管理*/
+            .person-manage-container {
+                .first-content {
+                    .person-top {
+                        .input {
+                            margin-left: 0;
+                            margin-right: 16px;
+                        }
+                    }
+                }
+
+                .second-content {
+                    display: none;
+
+                    .back-btn {
+                        line-height: 22px;
+                        padding-top: 24px
+                    }
+
+                    .common-head {
+                        padding: 0 0 16px 0;
+
+                        .text {
+                            vertical-align: middle;
+                        }
+
+                        .person-back {
+                            display: inline-block;
+                            height: 22px;
+                            margin-left: 40px;
+                            line-height: 22px;
+                            color: #888;
+                            font-weight: normal;
+                            font-size: 16px;
+                            text-align: left;
+                            vertical-align: middle;
+                        }
+                    }
+
+                    .search-box {
+                        line-height: 32px;
+
+                        .search-img {
+                            width: 21px;
+                            height: 21px;
+                            margin-left: 10px;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*侧边栏切换的样式*/
+.admin-container-mini {
+    .left-nav {
+        width: 80px;
+        transition: width 0.2s;
+
+        .logo {
+            width: 100%;
+            text-align: center;
+
+            .logo-img {
+                display: none;
+            }
+
+            .logo-img-mini {
+                display: inline-block;
+                border-radius: 50%;
+            }
+        }
+
+        .nav-item {
+            .text {
+                display: none;
+            }
+        }
+    }
+
+    .right-content {
+        left: 80px;
+        transition: left 0.2s;
+
+        .right-head {
+            .box-left {
+                .change-icon {
+                    display: none;
+                }
+
+                .change-icon-1 {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}

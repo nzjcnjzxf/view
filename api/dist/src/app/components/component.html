@@ -1,0 +1,270 @@
+<!-- 表格1 -->
+<script type="text/html" id="table-type-1">
+  <tr class="common-head-tr">
+    <th width="200">ID</th>
+    <th>姓名</th>
+    <th>科別</th>
+    <th></th>
+    <!-- <th class="common-delete">共</span> <%= total %> <span i18n="pen.data">筆資料</span></!-->
+  </tr>
+  <% for(var i = 0;i < list.length;i++){ %>
+  <tr class="common-body-tr">
+    <td width="200" valign="middle"><%= list[i].employeesNo %></td>
+    <td valign="middle"><%= list[i].userName %></td>
+    <td valign="middle"><%= list[i].centerName %></td>
+    <td valign="middle" class="common-delete">
+      <div class="tool-tip-box">
+        <span class="remove-img tool-img img-icon"></span>
+        <div class="tool-text-box">刪除</div>
+      </div>
+    </td>
+  </tr>
+  <% } %>
+</script>
+
+<!-- 表格2 -->
+<script type="text/html" id="table-type-2">
+  <tr class="table-head">
+    <th class="th-head text-l" i18n="code.name" width="100">代碼</th>
+    <th class="text-l" i18n="en.ch">英文/中文名稱</th>
+    <%if(showSpecialty){%>
+    <th class="text-l" i18n="en.kb" width="100">科別</th>
+    <%} else{%>
+    <th class="space-th"></th>
+    <%}%>
+    <%if(showSearchColumn){%>
+    <th class="text-l" width="200">搜尋關鍵字</th>
+    <%} else {%>
+    <th class="space-th"></th>
+    <%}%>
+    <%if(total>0){%>
+    <th class="th-num" width="100"></th>
+    <!-- <th class="th-num" width="100"><span i18n="text.common">共</span> <%= total %> <span i18n="pen.data">筆資料</span></th> -->
+    <%} else {%>
+    <th class="space-th"></th>
+    <%}%>
+  </tr>
+  <% for(var i = 0;i < list.length;i++){ %>
+  <tr class="table-tr">
+    <td valign="middle" class="text-l td-code"><%= list[i].icdCode %></td>
+    <td valign="middle" class="text-l">
+      <div class="text-box">
+        <div class="text-en">
+          <%= list[i].enName %>
+        </div>
+        <div class="text-ch">
+          <%= list[i].cnName %>
+        </div>
+      </div>
+    </td>
+    <td valign="middle" class="text-l">
+      <%= list[i].centerName%>
+    </td>
+    <td valign="middle" class="table-line-height">
+      <span class="ie-two-line-show two-line-show text-l" title="<%= list[i].words%>">
+        <%= list[i].words%>
+      </span>
+    </td>
+    <td valign="middle">
+      <%if(list[i].showEdit){%>
+      <div class="tool-tip-box">
+        <span class="edit-icon tool-img img-icon"></span>
+        <div class="tool-text-box">編輯</div>
+      </div>
+      <%}%>
+      <%if(list[i].showDelete){%>
+      <div class="tool-tip-box">
+        <span class="delete-icon tool-img img-icon dis-<%=showTool%>"></span>
+        <div class="tool-text-box">删除</div>
+      </div>
+      <!-- <span class="delete-icon img-icon"></span> -->
+      <%}%>
+      <%if(list[i].showCollection){%>
+      <%if(!list[i].codeType){%>
+      <!-- <span class="collection-icon img-icon"></span> -->
+      <div class="tool-tip-box">
+        <span class="collection-icon tool-img img-icon"></span>
+        <div class="tool-text-box tool-text-box-4">加入常用</div>
+      </div>
+      <%} else {%>
+      <span class="collection-icon collection-icon-active img-icon"></span>
+      <%}%>
+      <%}%>
+      <%if(list[i].showAdd){%>
+      <span class="add-icon img-icon"></span>
+      <%}%>
+      <%if(list[i].showIcon){%>
+      <span class="img-icon"></span>
+      <%}%>
+      </td>
+  </tr>
+  <% } %>
+</script>
+
+<!-- 弹框 -->
+<!-- 
+第一种类型弹框使用showDefaultAlert来进行区分
+当 showDefaultAlert 为true的时候显示第一种类型 type: 'warn' 'error' tipMsg
+当 showDefaultAlert 为false的时候显示第二种类型
+
+
+根据字段showContentType 来区分不同内容
+showContentType 1  新增系統管理員弹框
+showContentType 2  导入弹框
+showContentType 3  新增角色管理弹框
+
+
+ -->
+<script type="text/html" id="alert-component">
+  <div class="mask">
+    <%if(showDefaultAlert){%>
+    <!-- 第一种类型弹框 -->
+    <div class="tip-box ps-c box-<%= custom %>">
+      <div class="tip-msg">
+        <%if(type === 'warn'){%>
+        <img class="img" src="../images/Icon_Question.png" />
+        <%} else {%>
+        <img class="img" src="../images/mistake.png" />
+        <%}%>
+            <span class="text"><%= tipMsg %></span>
+      </div>
+      <div class="btn-group">
+        <div class="fr sure-btn btn">確 定</div>
+        <div class="fr cancel-btn btn">取 消</div>
+      </div>
+    </div>
+    <%} else {%>
+
+    <!-- 第二种类型弹框 -->
+    <div class="oral-add-box <%= roleCustom %>">
+      <!-- 头部部分 -->
+      <div class="box-head clearfix">
+        <div class="fl title"><%= title %></div>
+        <img class="fr img alert-close cp" src="../images/close.png" alt="">
+      </div>
+      <!-- 内容部分 -->
+      <div class="box-content">
+        <!-- 新增名词 -->
+        <%if(showContentType===1){%>
+        <div class="content-1">
+          <div class="search-title">請輸入ICD 10碼搜尋:</div>
+          <div class="input-box clearfix">
+            <input type="text" class="fl input common-input input-oral">
+            <div class="common-btn-primary fr add-oral-search">搜尋</div>
+          </div>
+          <div class="result-title">查詢結果：</div>
+          <div class="result-content clearfix">
+            <div class="fl code ell"></div>
+            <div class="fl text ell"></div>
+          </div>
+        </div>
+        <div class="content-2">
+          <div class="keyword-title">新增搜尋關鍵字</div>
+          <div class="key-box">
+            <div class="input-key-box clearfix">
+              <span class="num fl">1:</span>
+              <input type="text" class="input common-input">
+              <img class="close-btn cp fr" src="../images/close-black.png" alt="">
+            </div>
+          </div>
+          <div class="common-btn-primary add-btn">新增關鍵字</div>
+        </div>
+        <%} else if(showContentType===2){%>
+
+        <!-- 导入弹框 -->
+        <form id="fileForm" enctype="multipart/form-data" method="post">
+          <div class="import-content">
+            <div class="select-custom dis-<%=hide%>">
+              <span class="zk-text"> 專科：</span>
+              <div class="select-box">
+                <img class="down-img" src="../images/down.png" alt="">
+                <div class="text"></div>
+                <div class="select-option">
+                  <div class="option-box">
+                    <% for(var i = 0;i < list.length;i++){ %>
+                    <div class="option"><%= list[i].centerName %></div>
+                    <%}%>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="select-text">請選擇要匯入的檔案：</div>
+          <div class="input-box clearfix">
+            <input id="input-text" value="匯入檔案位置" class="input-text common-input fl" type="text">
+            <div class="space fl"></div>
+            <div class="common-btn-primary view-btn fl">瀏覽</div>
+            <input id="input-file" class="input-file cp" type="file" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" >
+          </div>
+        </div>
+      </form>
+        <%}else if(showContentType===3){%>
+                    <!-- 新增角色管理弹框 -->
+                    <div class="role-content">
+                      <div class="role-head clearfix">
+                        <div class="input-wrap fl">
+                          <input id="input-place-holder-1" class="input fl role-input" maxlength="30" type="text">
+                          <span id="span-place-holder-1" class="place-holder">請輸入ID搜尋</span>
+                        </div>
+                        <!-- <input class="common-input fl role-input" maxlength="30" type="text" placeholder="請輸入ID搜尋"> -->
+                        <div class="common-btn-primary fr role-search">搜尋</div>
+                      </div>
+                      <div class="search-text">查詢結果：</div>
+                      <div class="table-wrap">
+                        <table class="role-table">
+                          <tr class="role-head-tr">
+                            <th class="member-id" width="140">員工ID</th>
+                            <th class="member-name" width="100">姓名</th>
+                            <th>科別</th>
+                            <th></th>
+                          </tr>
+                          <tr class="role-body-tr cp">
+                            <td valign="middle" class="user-id ell"></td>
+                            <td valign="middle" class="user-name"></td>
+                            <td valign="middle" class="center-name"></td>
+                            <td valign="middle" class="select-icon">
+                              <span class="icon"></span>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                    <%}%>
+      </div>
+      <!-- 底部按钮部分 -->
+      <div class="box-foot clearfix">
+        <div class="fr common-btn-primary btn sure-btn">確 定</div>
+        <div class="fr common-btn-default btn cancel-btn">取 消</div>
+      </div>
+    </div>
+  <%}%>
+                  </div>
+</script>
+<!-- 自定义弹框 -->
+<!-- <script type="text/html" id="error-alert">
+  <div class="mask">
+    <div class="tip-box ps-c box-<%= custom %>">
+      <div class="tip-msg">
+        <img class="img" src="../images/mistake.png" />
+        <span><%= tipMsg %></span>
+      </div>
+      <div class="btn-group">
+        <div class="fr sure-btn btn">確 定</div>
+      </div>
+    </div>
+  </div>
+</script> -->
+<!-- 自定义下拉框 -->
+<script type="text/html" id="select-custom">
+  <div class="select-box">
+    <img class="down-img" src="../images/down.png" alt="">
+    <div class="text"><%=select.text%></div>
+    <div class="center-no dis-hide"><%=select.centerNo%></div>
+    <div class="select-option">
+      <div class="option-box">
+        <% for(var i = 0;i < select.list.length;i++){ %>
+        <div class="option"><%= select.list[i].centerName %></div>
+        <%}%>
+      </div>
+    </div>
+  </div>
+</script>

@@ -1,0 +1,30 @@
+<!-- 自定义弹框 -->
+<script type="text/html" id="error-alert">
+    <div class="mask <%=custom%>">
+        <div class="tip-box ps-c">
+            <div class="tip-msg">
+                <img class="img" src="../images/mistake.png" />
+                <span class="text"><%= tipMsg %></span>
+            </div>
+            <div class="btn-group">
+                <div class="fr sure-btn btn">確 定</div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- 表格弹框 -->
+
+<script type="text/html" id="table-alert">
+    <div class="mask">
+        <div class="alert-content">
+            <div class="table-alert-header">搜尋結果
+                <img src="../images/close-black.png" class="close-black fr cp" alt="">
+            </div>
+            <table id="table-mask-alert" class="table table-mask-alert">
+            </table>
+            <div class="table-foot" id="table-alert-foot"></div>
+            <div class="table-alert-foot-no-data table-foot">暫無數據</div>
+        </div>
+    </div>
+</script>

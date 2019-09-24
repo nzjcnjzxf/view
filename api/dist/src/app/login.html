@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>ICD10智能輸入平台登录</title>
+  <link rel="stylesheet" href="../css/style.min.css" />
+</head>
+
+<body>
+  <div class="login-container">
+    <div class="content ps-c">
+      <div class="logo"></div>
+      <div class="login-box">
+        <div class="user-box">
+          <img src="../images/account.png" class="fl img" />
+          <div class="input-box fr">
+            <input type="text" maxlength="30" class="input input-user" placeholder="请输入帳號" />
+            <img class="close-btn clear-btn-user" src="../images/close.png" alt="" />
+          </div>
+        </div>
+        <div class="pwd-box">
+          <img src="../images/password.png" class="fl img" />
+          <div class="input-box fr">
+            <input type="password" maxlength="30" class="input input-pwd" placeholder="请输入密碼" />
+            <img class="close-btn clear-btn-pwd" src="../images/close.png" alt="" />
+          </div>
+        </div>
+        <div class="login-btn">登入</div>
+      </div>
+    </div>
+  </div>
+  <div id="mask-alert"></div>    
+  <script src="../js/common.js"></script>
+  <script src="../js/login.js"></script>
+</body>
+</html>
+@@include('components/alert-component.html')

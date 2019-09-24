@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <title i18n="project.title">ICD10智能輸入平台</title>
+  <link rel="stylesheet" href="../css/style.min.css" />
+</head>
+
+<body>
+  <div class="admin-container">
+    <div class="left-nav">
+      <div class="logo">
+        <img class="logo-img" src="../images/logo_01.png" alt="">
+        <img class="logo-img-mini" src="../images/logo-m.png" alt="">
+      </div>
+      <ul>
+        <li class="nav-item active no-auth">
+          <span class="icon nav-1-icon"></span>
+          <span class="text" i18n="nav.role">角色權限管理</span>
+        </li>
+        <li class="nav-item">
+          <span class="icon nav-2-icon"></span>
+          <span class="text" i18n="nav.oral">口語名詞檢索庫管理</span>
+        </li>
+        <li class="nav-item">
+          <span class="icon nav-3-icon"></span>
+          <span class="text" i18n="nav.role">個人常用碼管理</span>
+        </li>
+      </ul>
+    </div>
+    <div class="right-content">
+      <div class="right-head">
+        <div class="fl box-left">
+          <img class="change-icon menu-icon" width="18" height="15" src="../images/menufold.png">
+          <img class="change-icon-1 menu-icon" src="../images/menu-icon.png">
+        </div>
+        <div class="box-right fr">
+          <span class="text department">神經外科</span>
+          <span class="text user">Dr. Chen</span>
+          <span>ID:<span class="text user-id">35625586</span></span>
+          <span class="span-box">
+            <img src="../images/user-icon.png" class="person-icon">
+            <img src="../images/tc.png" class="tc-icon cp">
+          </span>
+        </div>
+        <div class="admin-content">
+          <!-- 角色权限管理 -->
+          <div class="role-manage-container manage-content">
+            <div class="common-head" i18n="nav.role">角色權限管理</div>
+            <div class="common-top">
+              <div class="fl select-custom"></div>
+              <div class="input-wrap role-input-wrap fl mg-r-12 mg-l-10">
+                <input id="input-place-holder-0" type="text" maxlength="100" class="input">
+                <span id="span-place-holder-0" class="place-holder">请输入關鍵字</span>
+              </div>
+              <img class="fl search-img" src="../images/search.png" alt="">
+              <div class="add-btn fr" i18n="role.add.manage">新增系統管理員</div>
+            </div>
+            <!-- 角色管理表格 -->
+            <table id="role-table" class="common-table"></table>
+            <div class="table-foot" id="role-foot"></div>
+            <div class="role-no-data table-foot">暫無數據</div>
+          </div>
+          <!-- 口语名称检索管理 -->
+          <div class="oral-manage-container manage-content">
+            <div class="common-head" i18n="nav.oral">口語名詞檢索庫管理</div>
+            <!-- 口语名词列表管理 -->
+            <div class="oral-content oral-content-list">
+              <div class="nav-top">
+                <ul class="fl nav-box">
+                  <li i18n="oral.person" class="fl sub-nav-item sub-nav-item-active">個人</li>
+                  <li i18n="oral.specialty" class="fl sub-nav-item no-auth">專科</li>
+                  <li i18n="oral.whole" class="fl sub-nav-item sub-item-last no-auth">全院</li>
+                </ul>
+                <div class="fr btn-box">
+                  <a href="/template/template-words.xlsx" target="_blank">
+                    <div i18n="oral.list" class="fl oral-name">口語名詞表範例</div>
+                  </a>
+                  <div i18n="oral.import" class="fl common-btn-default import-name">匯入名詞</div>
+                  <div i18n="oral.export" class="fl common-btn-default export-name">匯出名詞</div>
+                  <div i18n="oral.add" class="fl common-btn-primary add-name">新增名詞</div>
+                </div>
+              </div>
+              <div class="sub-content-box">
+                <div class="sub-content sub-content-active">
+                  <!-- 个人表格 -->
+                  <table id="oral-person-table" class="table"></table>
+                  <div class="table-foot" id="oral-person-foot"></div>
+                  <div class="oral-person-no-data table-foot">暫無數據</div>
+                </div>
+                <div class="sub-content select-specialty">
+                  <div class="search-box">
+                    <div class="fl select-custom"></div>
+                    <!-- <img class="search-img" src="../images/search.png" alt=""> -->
+                  </div>
+                  <!-- 专科表格 -->
+                  <table id="oral-specialty-table" class="table"></table>
+                  <div class="table-foot" id="oral-specialty-foot"></div>
+                  <div class="oral-specialty-no-data table-foot">暫無數據</div>
+                </div>
+                <div class="sub-content">
+                  <!-- 全院表格 -->
+                  <table id="oral-whole-table" class="table"></table>
+                  <div class="table-foot" id="oral-whole-foot"></div>
+                  <div class="oral-whole-no-data table-foot">暫無數據</div>
+                </div>
+              </div>
+            </div>
+            <!-- 口语名词新增的页面 -->
+            <div class="oral-content oral-content-add dis-hide">
+              <div class="add-title-box clearfix">
+                <div class="fl text-1">新增類別:</div>
+                <div class="fl text-2">個人</div>
+                <div class="fl is-zk oral-other dis-hide">
+                  <div class="fl text-3">所屬專科:</div>
+                  <div class="fl text-4">神經外科</div>
+                </div>
+                <div class="fl is-zk  oral-zk">
+                  <div class="select-zk fl">選擇專科:</div>
+                  <div class="select-custom fl"></div>
+                </div>
+              </div>
+              <div class="add-search-box">
+                <div class="left-text fl">搜尋ICD10代碼:</div>
+                <div class="input-wrap fl">
+                  <input id="input-place-holder-4" type="text" maxlength="200" class="input search-input">
+                  <span id="span-place-holder-4" class="place-holder">請輸入ICD代碼與關鍵字</span>
+                </div>
+                <!-- <input type="text" maxlength="200" class="common-input  " placeholder="請輸入ICD代碼與關鍵字"> -->
+                <img class="search-img cp" src="../images/search.png" alt="">
+              </div>
+              <!-- 新增搜索的表格 -->
+              <div class="oral-search-box">
+                <table id="oral-search-table" class="table oral-search-table"></table>
+              </div>
+              <div class="add-keyword">新增搜尋關鍵字</div>
+              <div class="add-wrap">
+                <div class="add-box">
+                  <div class="add-key-box clearfix">
+                    <span class="fl">關鍵字<span class="num">1</span>:</span>
+                    <div class="input-box more-input-box">
+                      <input type="text" maxlength="20" class="input common-input">
+                      <span class="place-holder">請輸入新增關鍵字</span>
+                    </div>
+                    <img class="close-btn cp fr" src="../images/close-black.png" alt="">
+                  </div>
+                </div>
+                <div class="text-c add-btn">
+                  <img src="../images/add.png" alt="" class="cp add-btn-img">
+                </div>
+              </div>
+              <div class="add-btn-group text-c">
+                <div class="add-cancel common-btn-default">取消</div>
+                <div class="add-sure common-btn-primary">儲存</div>
+              </div>
+            </div>
+          </div>
+          <!-- 个人常用码管理 -->
+          <div class="person-manage-container manage-content">
+            <div class="first-content person-first">
+              <div i18n="nav.person" class="common-head">個人常用碼管理</div>
+              <div class="common-top person-top">
+                <div class="input-wrap fl mg-r-12 person-input-wrap">
+                  <input id="input-place-holder-2" type="text" maxlength="200" class="input search-value">
+                  <span id="span-place-holder-2" class="place-holder">请输入關鍵字</span>
+                </div>
+                <!-- <input type="text" maxlength="200" class="fl input search-value" placeholder="请输入關鍵字"> -->
+                <img class="fl search-img search-btn" src="../images/search.png" alt="">
+                <div i18n="nav.person" class="add-btn fr person-add">新增</div>
+              </div>
+              <!-- 个人码管理表格 -->
+              <table id="person-manage-table" class="table"></table>
+              <div class="table-foot" id="person-manage-foot"></div>
+              <div class="person-manage-foot-no-data table-foot">暫無數據</div>
+            </div>
+            <div class="second-content person-second">
+              <div class="back-btn"></div>
+              <div class="common-head">
+                <span i18n="person.add.code" class="text">新增個人常用碼</span>
+                <span i18n="btn.back" class="cp person-back">
+                  < 返回</span> </div> <div class="search-box">
+                    <div class="input-wrap fl mg-r-12 add-input-wrap">
+                      <input id="input-place-holder-3" type="text" maxlength="200" class="input search-value">
+                      <span id="span-place-holder-3" class="place-holder">请输入關鍵字</span>
+                    </div>
+                    <!-- <input type="text" maxlength="200" i18n="role.input.placehold" i18n-only="placeholder"
+                      placeholder="请输入關鍵字" class="common-input search-value"> -->
+                    <img class="search-img search-btn" src="../images/search.png" alt="">
+              </div>
+              <!--新增个人码表格 -->
+              <table id="person-add-table" class="table"></table>
+              <div class="table-foot" id="person-add-foot"></div>
+              <div class="person-add-foot-no-data table-foot">暫無數據</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 弹框 -->
+    <div id="loadding " class="loadding-mask">
+      <img src="../images/loadding.gif" class="loadding-img" alt="">
+    </div>
+    <div id="mask"></div>
+    <div id="mask-alert"></div>
+    <script src="../js/common.js"></script>
+    <script src="../js/index.js"></script>
+    @@include('components/component.html')
+    @@include('components/alert-component.html')
+</body>
+
+</html>
