@@ -78,13 +78,20 @@
                     v-model="dataType">{{item.value}}
             </label>
         </div>
+        <div class="list-item">
+            <span style="display: inline-block;width: 130px">token:</span>
+            <input type="text" v-model="token">
+        </div>
         <div class="list-item" v-for="(item,index) in list" :key="index">
             <span style="display: inline-block;width: 130px">{{item.label}}：</span>
             <input type="text" v-model="item.name" :placeholder="index>0?'请输入参数名称':'请输入请求地址'">
             <input type="text" v-model="item.value" :placeholder="index > 0?'请输入参数的值' :'请输入请求路由'">
+            <button v-if="index >0&&!item.isNumber"
+                @click="item.value=parseInt(item.value);item.isNumber=!item.isNumber">转为数字</button>
+            <button v-if="index >0&&item.isNumber"
+                @click="item.value=String(item.value);item.isNumber=!item.isNumber">转为字符</button>
             <button v-if="index === list.length - 1" @click="add(index)">添加字段</button>
         </div>
-
         <!-- get请求 -->
         <!-- post请求 -->
         <button id="btn" @click="ask">请求</button>
@@ -94,6 +101,7 @@
         var app = new Vue({
             el: '#app',
             data: {
+                token: '',
                 content: '结果！',
                 askTypeArr: [{
                         value: 'axios'
@@ -251,11 +259,11 @@
                         //是则将数据拼接在url后面
                         url = url + param;
                     }
-
+                    console.log(this.token)
 
                     //初始化请求
                     xhr.open(method, url, true);
-
+                    xhr.setRequestHeader("token", this.token);
                     //如果method == post
                     if (method == "post") {
                         if (type === 'application/json') {
@@ -299,12 +307,21 @@
                 axiosRequest() {
                     axios({
                         headers: {
-                            "Content-Type": this.dataType
+                            "Content-Type": this.dataType,
+                            token: this.token
                         },
                         method: this.type,
                         baseURL: this.list[0].name,
                         url: this.list[0].value,
-                        data: this.handleParams()
+                        data: this.handleParams(),
+                        proxy: {
+                            host: '127.0.0.1',
+                            port: 9000,
+                            auth: {
+                                username: 'mikeymike',
+                                password: 'rapunz3l'
+                            }
+                        },
                     }).then(res => {
                         console.log(res)
                         this.content = JSON.stringify(res)
