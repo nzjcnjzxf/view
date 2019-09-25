@@ -12,6 +12,8 @@ $(function () {
     util.setPlaceHolder('input-pwd', local.inputPwd);
     // 图片预加载
     util.preloadimages(['../images/mistake.png']);
+    /**进入登录页清空用户信息 */
+    $.cookie('userInfo', null)
     var $userName = $('.login-container .input-user');
     var $password = $('.login-container .input-pwd');
     $('.login-container .clear-btn-user').on('click', function () {

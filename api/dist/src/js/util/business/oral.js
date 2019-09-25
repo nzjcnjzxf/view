@@ -8,7 +8,17 @@ var olarRouter = config.olarRouter;
 var smartRouter = config.smartRouter;
 var currentOlarRouter = olarRouter.person;
 var typeInput = util.typeInput;
+/**引入模块 */
+var commonMoudle = require('util/business/common.js')
+var pageSize = config.pageSize
 module.exports = (function () {
+    var wordIds = null;
+    // 表格每页显示的数量
+    var oralCurrentPage = 1;
+    /**口语名词新增编辑时显示的全局num */
+    var oralAddNum = 1;
+    /**新增表格保存点击状态 */
+    var showCheck = "";
 
     /**---------------------------口语名词检索管理 start------------------------------------ */
     /** 科室下拉列表的渲染
@@ -26,7 +36,7 @@ module.exports = (function () {
         var options = options || {};
         var centerNo = '';
         var centerName = '';
-        getCenterInfo(function (data) {
+        commonMoudle.getCenterInfo(function (data) {
             var list = [].concat({
                 centerName: local.all,
                 centerNo: ""
@@ -58,7 +68,7 @@ module.exports = (function () {
             // 渲染之后进行判断是否能够进行输入
             checkClickSearch();
             // 为下拉列表添加事件
-            selectAddEvent(container, function (index) {
+            commonMoudle.selectAddEvent(container, function (index) {
                 var $centerNo = $("." + container + " .center-no");
                 $centerNo.text(list[index].centerNo);
                 // 渲染之后进行判断是否能够进行输入
@@ -131,7 +141,7 @@ module.exports = (function () {
      */
     function renderTableAddEventListen (options) {
         // 渲染表格
-        renderTable(options.tableId, "2", {
+        commonMoudle.renderTable(options.tableId, "2", {
             list: options.data,
             total: options.total,
             showSearchColumn: true,
@@ -159,8 +169,9 @@ module.exports = (function () {
         var oralData = [];
         var currentTypes = ["person", "specialty", "whole"];
         oralCurrentPage = options.currentPage;
+        currentOlarRouter = oralCurrentIndex === 1 ? olarRouter.person : olarRouter.other;
         // 请求之前先清空表格
-        renderTable("oral-" + currentTypes[oralCurrentIndex - 1] + "-table", "2", {
+        commonMoudle.renderTable("oral-" + currentTypes[oralCurrentIndex - 1] + "-table", "2", {
             list: [],
             total: 0,
             showSearchColumn: true,
@@ -204,7 +215,7 @@ module.exports = (function () {
                 }
                 // 创建分页
                 if (options.firstRequest) {
-                    createPage({
+                    commonMoudle.createPage({
                         wrapId: options.wrapId,
                         total: res.totalCount,
                         currentPage: options.currentPage,
@@ -225,7 +236,7 @@ module.exports = (function () {
         // 删除
         $delete.on("click", function () {
             var index = $delete.index(this);
-            deleteTips(local.sureToDeleteNon, function () {
+            commonMoudle.deleteTips(local.sureToDeleteNon, function () {
                 request.delete(
                     currentOlarRouter.del, {
                     ids: res.data[index].wordIds.split(",")
@@ -287,6 +298,8 @@ module.exports = (function () {
     }
     /**口语名词的显示 */
     function showText (title, isEdit) {
+        // 还原点击后的值
+        showCheck = ''
         $(".oral-content").hide();
         $(".oral-content-add").show();
         $(".is-zk").hide();
@@ -320,7 +333,7 @@ module.exports = (function () {
     /**清空回显的数据 还原数据 */
     function clearEditData () {
         checkClickSearch();
-        renderTable("oral-search-table", "2", {
+        commonMoudle.renderTable("oral-search-table", "2", {
             list: [],
             total: 0,
             showSearchColumn: false,
@@ -355,7 +368,7 @@ module.exports = (function () {
             centerName: data.centerName
         });
         // 渲染表格
-        renderTable("oral-search-table", "2", {
+        commonMoudle.renderTable("oral-search-table", "2", {
             list: searchData,
             total: searchData.length,
             showSearchColumn: false,
@@ -383,7 +396,6 @@ module.exports = (function () {
     }
     /**请求搜寻的口语列表 */
 
-    var showCheck = "";
     function requestSearchList (options) {
         var searchData = [];
         request.post(
@@ -396,7 +408,7 @@ module.exports = (function () {
         },
             function (res) {
                 if (res.data.length === 0) {
-                    myAlert(local.codeSearchNo);
+                    commonMoudle.myAlert(local.codeSearchNo);
                     return
                 }
                 if (options.firstRequest) {
@@ -417,7 +429,7 @@ module.exports = (function () {
                     });
                 });
                 // 渲染表格
-                renderTable(options.id, "2", {
+                commonMoudle.renderTable(options.id, "2", {
                     list: searchData,
                     total: res.totalCount,
                     showSearchColumn: false,
@@ -434,7 +446,7 @@ module.exports = (function () {
                 // 创建分页
                 // 如果第一次请求就创建分页
                 if (options.firstRequest) {
-                    createPage({
+                    commonMoudle.createPage({
                         wrapId: options.wrapId,
                         total: res.totalCount,
                         currentPage: options.current,
@@ -450,7 +462,7 @@ module.exports = (function () {
                     var list = [];
                     showCheck = v.icdCode;
                     if (v.wordType) {
-                        myAlert(local.recordExists)
+                        commonMoudle.myAlert(local.recordExists)
                         return
                     }
                     $(this)
@@ -467,7 +479,7 @@ module.exports = (function () {
                         cnName: v.cnName,
                         showDelete: true
                     });
-                    renderTable("oral-search-table", "2", {
+                    commonMoudle.renderTable("oral-search-table", "2", {
                         list: list,
                         total: list.length,
                         showSearchColumn: false,
@@ -493,7 +505,7 @@ module.exports = (function () {
     function oralSearchDelete () {
         $('.oral-search-table .delete-icon').off();
         $('.oral-search-table .delete-icon').on('click', function () {
-            renderTable("oral-search-table", "2", {
+            commonMoudle.renderTable("oral-search-table", "2", {
                 list: [],
                 total: 0,
                 showSearchColumn: false,
@@ -536,16 +548,16 @@ module.exports = (function () {
         });
 
         if (!$('.oral-zk .center-no').text() && oralCurrentIndex === 2) {
-            myAlert(local.pleaseSelectCategory);
+            commonMoudle.myAlert(local.pleaseSelectCategory);
             return
         }
 
         if (!icdCode || words.length === 0) {
-            myAlert(local.inputNotComplete);
+            commonMoudle.myAlert(local.inputNotComplete);
             return;
         }
         if (util.hasSpecialChar(words)) {
-            myAlert(local.keyWordLimit);
+            commonMoudle.myAlert(local.keyWordLimit);
             return
         }
         if (!wordIds) {
@@ -597,7 +609,7 @@ module.exports = (function () {
     /**点击新增编辑名词弹框加号按钮 */
     $(".add-btn-img").on("click", function () {
         if (oralAddNum >= 5) {
-            myAlert(local.upToFive);
+            commonMoudle.myAlert(local.upToFive);
             return;
         }
         oralAddNum++;
@@ -617,7 +629,7 @@ module.exports = (function () {
     /**删除 */
     $(".add-box .close-btn").on("click", function () {
         if (oralAddNum <= 1) {
-            myAlert(local.lessLeastOne);
+            commonMoudle.myAlert(local.lessLeastOne);
             return;
         }
         oralAddNum--;
@@ -687,7 +699,10 @@ module.exports = (function () {
     }
 
     return {
-
+        refreshTable: refreshTable,
+        specialtySelect: specialtySelect,
+        subNavChange: subNavChange,
+        showPersonTable: showPersonTable
     }
     /**---------------------------口语名词检索管理 end------------------------------------ */
 

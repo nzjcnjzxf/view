@@ -1,4 +1,4 @@
-var $ = require("jquery");
+var $ = require('jquery')
 var request = require("request");
 var config = require("util/config.js");
 var util = require('util/util.js');
@@ -6,9 +6,22 @@ var local = require('util/message.js').ch;
 var userRouter = config.userRouter;
 var typeInput = util.typeInput;
 var template = require("template");
+var pageSize = config.pageSize
+/**引入模块 */
+var commonMoudle = require('util/business/common.js')
 module.exports = (function () {
     /**---------------------------角色权限管理 start----------------------————-------------- */
-
+    /**科室信息的获取 */
+    function getCenterInfo (centerInfo) {
+        request.post(
+            userRouter.queryCenterInfo,
+            {},
+            function (data) {
+                centerInfo(data);
+            },
+            function (err) { }
+        );
+    }
     /**角色权限管理下拉框 */
     function showRoleSelect () {
         getCenterInfo(function (data) {
@@ -31,7 +44,7 @@ module.exports = (function () {
             $('.role-manage-container .input').val('');
             showRoleTable();
             // 为下拉列表添加事件 设置centerNo的值
-            selectAddEvent("role-manage-container", function (index) {
+            commonMoudle.selectAddEvent("role-manage-container", function (index) {
                 var $centerNo = $(".role-manage-container .center-no");
                 $centerNo.text(list[index].centerNo);
             });
@@ -57,7 +70,7 @@ module.exports = (function () {
         },
             function (res) {
                 // 渲染表格
-                renderTable("role-table", "1", {
+                commonMoudle.renderTable("role-table", "1", {
                     list: res.data,
                     total: res.totalCount
                 });
@@ -70,7 +83,7 @@ module.exports = (function () {
                 }
                 // 创建分页
                 if (options.firstRequest) {
-                    createPage({
+                    commonMoudle.createPage({
                         wrapId: options.wrapId,
                         currentPage: options.currentPage,
                         total: res.totalCount,
@@ -82,7 +95,7 @@ module.exports = (function () {
                 $remove.off();
                 $remove.on("click", function () {
                     var index = $remove.index(this);
-                    deleteTips(
+                    commonMoudle.deleteTips(
                         local.sureToRemove,
                         function () {
                             request.delete(
@@ -104,7 +117,7 @@ module.exports = (function () {
     }
     /**角色管理 显示当前的表格 */
     function showRoleTable (currentPage) {
-        var keyWord = myTrim($(".role-manage-container .input").val());
+        var keyWord = $.trim($(".role-manage-container .input").val());
         var centerNo = $(".role-manage-container .center-no").text();
         requestRoleTable({
             firstRequest: true,
@@ -147,7 +160,7 @@ module.exports = (function () {
             userInfo = null;
             var inputValue = $(".role-content .role-input").val();
             if (!inputValue) {
-                myAlert(local.pleaseInputId, 'custom-mask');
+                commonMoudle.myAlert(local.pleaseInputId, 'custom-mask');
                 return;
             }
             request.post(
@@ -200,10 +213,10 @@ module.exports = (function () {
                 }
             );
         });
-        clickButton(
+        commonMoudle.clickButton(
             function () {
                 if (!userInfo) {
-                    myAlert(local.pleaseSearchUser, 'custom-mask');
+                    commonMoudle.myAlert(local.pleaseSearchUser, 'custom-mask');
                     return;
                 }
                 request.post(userRouter.addSysUser, userInfo, function (res) {
@@ -215,9 +228,7 @@ module.exports = (function () {
         );
     });
     return {
-        showRoleSelect: showRoleSelect,
-        showRoleTable: showRoleTable
+        showRoleSelect: showRoleSelect
     }
     /**---------------------------角色权限管理 end------------------——————------------------ */
-
 })()

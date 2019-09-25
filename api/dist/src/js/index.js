@@ -1,6 +1,7 @@
 var $ = require("jquery");
 var template = require("template");
-var IndexUtil = require("util/index.util.js");
+// var IndexUtil = require("util/index.util.js");
+var IndexUtil = require("util/business/index.js");
 var request = require("lib/request.js");
 var token = $.cookie("token");
 var config = require("util/config.js");
@@ -27,12 +28,15 @@ $(function () {
     return false;
   })
   /**设置用户信息 */
-  $(".department").text(userInfo.centerName);
-  $(".user").text(userInfo.employeesName);
-  $(".user-id").text(userInfo.employeesNo);
-
+  if (userInfo) {
+    $(".department").text(userInfo.centerName);
+    $(".user").text(userInfo.employeesName);
+    $(".user-id").text(userInfo.employeesNo);
+  } else {
+    location.href = "../app/login.html";
+  }
   // 功能初始化
-  IndexUtil.init(template);
+  IndexUtil.init();
   // 导航切换
   IndexUtil.navContentChange();
   /**显示文件路径 */

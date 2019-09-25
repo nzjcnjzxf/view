@@ -1,5 +1,6 @@
 module.exports = (function () {
     return {
+        pageSize: 10,
         /**口语名词的接口分为两类 一类是个人的，一类是专科和全院的 */
         olarRouter: {
             person: {

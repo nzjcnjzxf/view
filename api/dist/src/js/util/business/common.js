@@ -3,9 +3,9 @@ var request = require("request");
 var config = require("util/config.js");
 var pagination = require("lib/pagination.js");
 var template = require("template");
-var local = require('util/message.js').ch;
-var olarRouter = config.olarRouter;
+var local = require("util/message.js").ch;
 var userRouter = config.userRouter;
+var pageSize = config.pageSize;
 module.exports = (function () {
     /**退出登录 */
     function onQuitIcon () {
@@ -20,32 +20,12 @@ module.exports = (function () {
             clickButton(
                 function () {
                     location.href = "../app/login.html";
+                    $.cookie('token', null);
+                    $.cookie('userInfo', null);
                 },
                 function () { }
             );
         });
-    }
-    /** 权限判断 */
-    function checkAuth () {
-        if (!hasAuth) {
-            var $items = $(".admin-container .nav-item");
-            var $contents = $(".admin-container .manage-content");
-            $items
-                .removeClass("active")
-                .eq(1)
-                .addClass("active");
-            $contents
-                .hide()
-                .eq(1)
-                .show();
-            $(".sub-nav-item")
-                .eq(0)
-                .css("marginRight", 0);
-            $(".no-auth").hide();
-            showPersonTable();
-        } else {
-            showRoleSelect();
-        }
     }
     /**内容高度设置 */
     function setContentHeight () {
@@ -84,52 +64,6 @@ module.exports = (function () {
             renderData($index);
         });
     }
-
-    /**
-     * 点击菜单后渲染数据
-     * 当点击口语名词的时候 还原 oralCurrentIndex 的值为1  然后显示第一栏 个人的导航和内容
-     * 当点击个人管理的时候 ，显示个人常用管理  隐藏新增个人常用管理
-     */
-    function renderData (i) {
-        switch (i) {
-            case 0:
-                // 显示角色下拉框
-                showRoleSelect();
-                break;
-            case 1:
-                // 还原 oralCurrentIndex 的值为1
-                oralCurrentIndex = 1;
-                currentOlarRouter = olarRouter.person;
-                var $subItems = $(".oral-manage-container .sub-nav-item");
-                var $subContents = $(".oral-manage-container .sub-content");
-                //  导航显示第一个
-                $subItems
-                    .removeClass("sub-nav-item-active")
-                    .eq(0)
-                    .addClass("sub-nav-item-active");
-                //  内容显示第一个
-                $subContents
-                    .hide()
-                    .eq(0)
-                    .show();
-                // 显示口语名词列表 隐藏新增内容
-                $(".oral-content").show();
-                $(".oral-content-add").hide();
-                showPersonTable();
-                break;
-            case 2:
-                var $personFirst = $(".person-first"),
-                    $personSecond = $(".person-second");
-                $personFirst.show();
-                $personSecond.hide();
-                $(".person-first .search-value").val('');
-                showpersonManageTable('');
-                break;
-            default:
-                break;
-        }
-    }
-
     /**渲染表格 */
     function renderTable (cId, tId, data) {
         $("#" + cId).html(template($("#table-type-" + tId).html(), data));
@@ -181,10 +115,10 @@ module.exports = (function () {
     /**
      * ie12才开始支持trim 方法，自定义trim
      * 去除前后空格
-     * @param {trm} options 
+     * @param {trm} options
      */
     function myTrim (x) {
-        return x.replace(/^\s+|\s+$/gm, '');
+        return x.replace(/^\s+|\s+$/gm, "");
     }
 
     /**
@@ -249,7 +183,8 @@ module.exports = (function () {
     /**科室信息的获取 */
     function getCenterInfo (centerInfo) {
         request.post(
-            userRouter.queryCenterInfo, {},
+            userRouter.queryCenterInfo,
+            {},
             function (data) {
                 centerInfo(data);
             },
@@ -258,11 +193,9 @@ module.exports = (function () {
     }
     return {
         onQuitIcon: onQuitIcon,
-        checkAuth: checkAuth,
         setContentHeight: setContentHeight,
         navChange: navChange,
         navContentChange: navContentChange,
-        renderData: renderData,
         renderTable: renderTable,
         clickButton: clickButton,
         deleteTips: deleteTips,
@@ -271,5 +204,5 @@ module.exports = (function () {
         createPage: createPage,
         selectAddEvent: selectAddEvent,
         getCenterInfo: getCenterInfo
-    }
-})()
+    };
+})();

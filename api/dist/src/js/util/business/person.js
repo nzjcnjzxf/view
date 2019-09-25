@@ -6,10 +6,13 @@ var local = require('util/message.js').ch;
 var codeRouter = config.codeRouter;
 var smartRouter = config.smartRouter;
 var typeInput = util.typeInput;
+/**引入模块 */
+var commonMoudle = require('util/business/common.js')
+var pageSize = config.pageSize
 module.exports = (function () {
     /**---------------------------个人常用码管理 start------------------------------------ */
 
-    /**
+    /**s
      * 请求个人管理列表数据
      * @param options
      * @type Object    参数类型
@@ -56,7 +59,7 @@ module.exports = (function () {
                 });
 
                 // 渲染表格
-                renderTable(options.id, "2", {
+                commonMoudle.renderTable(options.id, "2", {
                     list: personData,
                     total: res.totalCount,
                     showSearchColumn: false,
@@ -72,7 +75,7 @@ module.exports = (function () {
                 // 创建分页
                 // 如果分页容器id存在就创建分页
                 if (options.firstRequest) {
-                    createPage({
+                    commonMoudle.createPage({
                         wrapId: options.wrapId,
                         total: res.totalCount,
                         currentPage: options.current,
@@ -97,7 +100,7 @@ module.exports = (function () {
         $delete.on("click", function () {
             var index = $delete.index(this);
             var icdCode = res.data[index].icdCode;
-            deleteTips(local.sureToDeleteCode, function () {
+            commonMoudle.deleteTips(local.sureToDeleteCode, function () {
                 request.delete(
                     codeRouter.del, {
                     icdCode: icdCode
@@ -138,7 +141,7 @@ module.exports = (function () {
     }
     /**个人常用码 管理列表 */
     function showpersonManageTable (inputWords, currentPage) {
-        var inputWords = myTrim(inputWords);
+        var inputWords = commonMoudle.myTrim(inputWords);
         personRequest({
             inputWords: inputWords,
             showDelete: true,
@@ -161,7 +164,7 @@ module.exports = (function () {
     }
     /** 个人常用码 新增个人常用码列表 */
     function showpersonAddTable (inputWords, currentPage) {
-        var inputWords = myTrim(inputWords);
+        var inputWords = commonMoudle.myTrim(inputWords);
         personRequest({
             inputWords: inputWords,
             showCollection: true,
@@ -195,7 +198,7 @@ module.exports = (function () {
             $personSecond.show();
             // 新增个人列表， 先将搜索词清空，在将列表清空
             $(".person-second .search-value").val("");
-            renderTable("person-add-table", "2", {
+            commonMoudle.renderTable("person-add-table", "2", {
                 list: [],
                 total: 0,
                 showSearchColumn: false,
@@ -223,7 +226,8 @@ module.exports = (function () {
         });
     }
     return {
-
+        personManage: personManage,
+        showpersonManageTable: showpersonManageTable
     }
 
     /**---------------------------个人常用码管理 end------------------------------------ */
