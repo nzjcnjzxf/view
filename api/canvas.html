@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <canvas id="canvas" width="500" height="500"></canvas>
+    </div>
+    <div id="time"></div>
+</body>
+
+</html>
+<script>
+    var canvas = document.getElementById('canvas')
+    var ctx = canvas.getContext('2d');
+    var i = 0
+    setInterval(() => {
+        time.innerHTML = new Date()
+    }, 1000)
+
+    function strokeTime(data) {
+        ctx.lineWidth = data.w;
+        ctx.strokeStyle = data.color;
+        ctx.beginPath();
+        ctx.moveTo(250, 250);
+        // 时间是从0点开始的所以要逆时针旋转90deg
+        ctx.arc(250, 250, data.len, (data.type * data.deg - 90) * Math.PI / 180, (data.type * data.deg - 90) * Math.PI /
+            180, false);
+        ctx.closePath();
+        ctx.stroke();
+    }
+
+    function clock() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var date = new Date();
+        var h = date.getHours();
+        var m = date.getMinutes();
+        var s = date.getSeconds();
+        m = m + s / 60;
+        h = h + m / 60;
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = 'red';
+        for (var i = 0; i < 60; i++) {
+            ctx.beginPath();
+            ctx.moveTo(250, 250);
+            ctx.arc(250, 250, 200, i * 6 * Math.PI / 180, (i + 1) * 6 * Math.PI / 180, false);
+            ctx.closePath();
+            ctx.stroke();
+        }
+        ctx.fillStyle = "#fff"
+        ctx.beginPath()
+        ctx.arc(250, 250, 190, 0, 2 * Math.PI, false);
+        ctx.closePath()
+        ctx.fill();
+
+        //时刻度和表盘
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = '#f00';
+        // drawCircularText("clockwise around thecircle ", Math.PI * 2, Math.PI / 8, ctx)
+        for (var i = 0; i < 12; i++) {
+            ctx.beginPath();
+            ctx.moveTo(250, 250);
+            ctx.arc(250, 250, 200, i * 30 * Math.PI / 180, (i + 1) * 30 * Math.PI / 180, false);
+            ctx.closePath();
+            ctx.stroke();
+        }
+        ctx.fillStyle = '#fff';
+        ctx.beginPath()
+        ctx.arc(250, 250, 180, 0, 2 * Math.PI, false);
+        ctx.closePath()
+        ctx.fill();
+        // 时针
+        strokeTime({
+            color: 'yellow',
+            type: h,
+            len: '80',
+            deg: 30,
+            w: '7'
+        });
+        // 分针
+        strokeTime({
+            color: 'blue',
+            type: m,
+            len: '120',
+            deg: 6,
+            w: '5'
+        });
+        // 秒针
+        strokeTime({
+            color: 'red',
+            type: s,
+            len: '180',
+            deg: 6,
+            w: '3'
+        });
+
+        ctx.fillStyle = 'blue'
+        ctx.beginPath()
+        ctx.arc(250, 250, 10, 0, 2 * Math.PI, false);
+        ctx.closePath();
+        ctx.fill();
+        requestAnimationFrame(clock);
+    }
+    clock()
+
+
+
+    // function drawCircularText(string, startAngle, endAngle, context) {
+    //     var circle = {
+    //         x: canvas.width / 2,
+    //         y: canvas.height / 2,
+    //         radius: 200
+    //     }
+    //     var TEXT_FILL_STYLE = "rgba(100,130,240,0.5)"
+    //     var TEXT_STROKE_STYLE = "rgba(200,0,0,0.7)"
+    //     var TEXT_SIZE = 64;
+    //     context.textAlign = "center"
+    //     context.textBaseLine = "middle"
+    //     var radius = circle.radius //圆的半径
+    //     var angleDecrement = (startAngle - endAngle) / (string.length - 1) //每个字母占的弧度
+    //     var angle = parseFloat(startAngle) //转一下数字
+    //     var index = 0;
+    //     var character;
+
+    //     context.save()
+    //     context.fillStyle = TEXT_FILL_STYLE;
+    //     context.strokeStyle = TEXT_STROKE_STYLE;
+    //     context.font = TEXT_SIZE + "px Lucida Sans"
+
+    //     while (index < string.length) {
+    //         character = string.charAt(index)
+    //         context.save()
+    //         context.beginPath()
+    //         context.translate(circle.x + Math.cos(angle) * radius, circle.y - Math.sin(angle) * radius)
+    //         context.rotate(Math.PI / 2 - angle) //Math.PI/2为旋转90度 Math.PI/180*X为旋转多少度 context.fillText(character,0,0)
+    //         context.strokeText(character, 0, 0)
+    //         angle -= angleDecrement
+    //         index++
+    //         context.restore()
+    //     }
+    //     context.restore()
+    // }
+</script>
