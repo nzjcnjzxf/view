@@ -4,6 +4,7 @@
   "description": "",
   "main": "1.js",
   "scripts": {
+    "start": "browser-sync start --server --file '**/*.html'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
