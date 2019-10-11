@@ -18,8 +18,3 @@
 //     }
 // }
 // console.log(a()())
-
-var a = 60
-setInterval(() => {
-    console.log(a--)
-}, 1000);
