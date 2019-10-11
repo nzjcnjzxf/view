@@ -1,0 +1,37 @@
+GET http://localhost:8080/news
+
+### news
+
+GET  http://localhost:8080/news?id=1
+
+###  put
+
+PUT http://localhost:8080/news
+
+{
+    "id": 1,
+    "title": "后社对数养斗治车亲连声角标三究己把空",
+    "desc": "复亲问太次北周金消由种层万铁交细。示共可根外属类数严进织干着史老严过。下问见那铁",
+    "tag": "接再况报",
+    "views": 3846,
+    "images": [
+      "http://dummyimage.com/200x100/7994f2&text=vudz",
+      "http://dummyimage.com/200x100/b7f279&text=uhwg"
+    ]
+}
+### Post
+
+
+POST http://localhost:8080/news
+
+{
+    "id": 11,
+    "title": "后社对数养斗治车亲连声角标三究己把空",
+    "desc": "复亲问太次北周金消由种层万铁交细。示共可根外属类数严进织干着史老严过。下问见那铁",
+    "tag": "接再况报",
+    "views": 3846,
+    "images": [
+      "http://dummyimage.com/200x100/7994f2&text=vudz",
+      "http://dummyimage.com/200x100/b7f279&text=uhwg"
+    ]
+}

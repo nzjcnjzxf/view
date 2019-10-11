@@ -1,0 +1,52 @@
+### posts
+@contentType = application/json
+### get
+GET http://localhost:3001/posts
+
+### post
+POST http://localhost:3001/posts
+Content-Type: {{contentType}}
+
+{
+    "id": 5,
+    "title": "json-server",
+    "author": "typicode222"
+}
+### put
+PUT http://localhost:3001/posts/2
+Content-Type: {{contentType}}
+
+{
+  "title": "json-44",
+  "author": "typicode33"
+}
+### delete
+DELETE http://localhost:3001/posts/1
+
+### comments 
+### get
+GET http://localhost:3001/comments
+### post
+POST http://localhost:3001/comments
+### put
+PUT http://localhost:3001/comments
+### delete
+DELETE http://localhost:3001/comments
+
+
+### profile
+### get
+GET http://localhost:3001/profile
+### post
+POST http://localhost:3001/profile
+content-type: application/json
+
+{
+      "id": 2,
+      "body": "some comment",
+      "postId": 1
+}
+### put
+PUT http://localhost:3001/profile/2
+### delete
+DELETE http://localhost:3001/profile
