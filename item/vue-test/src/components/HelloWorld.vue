@@ -2,6 +2,7 @@
     div.box
       ul.wrap
         li.item(v-text="msg" v-if="index > 2" v-for="(item,index) in 5" :key="index")
+      .sec 分割线
 </template>
 
 <script>

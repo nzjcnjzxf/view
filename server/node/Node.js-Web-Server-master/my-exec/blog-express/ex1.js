@@ -11,7 +11,7 @@ class Express {
             get: []
         }
     }
-    register (path) {
+    register(path) {
         const info = {}
         if (typeof path === 'string') {
             info.path = path
@@ -22,27 +22,59 @@ class Express {
         }
         return info
     }
-    use () {
+    use() {
+        const info = this.register.apply(this, arguments)
+        this.routes.all.push(info)
+    }
+    get() {
+        const info = this.register.apply(this, arguments)
+        this.routes.get.push(info)
+    }
+    post() {
+        const info = this.register.apply(this, arguments)
+        this.routes.post.push(info)
+    }
+    match(method, url) {
+        let stack = []
+        if (url === '/favicon.ico') {
+            return stack
+        }
+        let curRoutes = []
+        curRoutes = curRoutes.concat(this.routes.all, this.routes[method])
+        curRoutes.forEach(routeInfo => {
+            if (routeInfo.indexOf(url) === 0) {
+                stack = stack.concat(routeInfo.stack)
+            }
+        })
+        return stack
 
     }
-    get () {
-
+    handle(req, res, stack) {
+        const next = () => {
+            const middleWare = stack.shift
+            if (middleWare) {
+                middleWare(req, res, next)
+            }
+        }
+        next()
     }
-    post () {
-
+    callback() {
+        return (req, res) => {
+            res.json = data => {
+                res.setHeader('content-type', 'application/json')
+                res.end(
+                    JSON.stringify(data)
+                )
+                const url = req.url
+                const method = req.method.toLowerCase()
+                const resultList = this.match(url, method)
+                this.handle(req, res, resultList)
+            }
+        }
     }
-    match () {
-
-    }
-    handle () {
-
-    }
-    callback () {
-
-    }
-    listen (...args) {
+    listen(...args) {
         const server = http.createServer(this.callback())
         server.listen(...args)
     }
-
 }
+module.exports = Express
