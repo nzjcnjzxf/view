@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div >
+    <span id="span"></span>
+    <button id="zd">振动</button>
+  </div>
+</body>
+
+</html>
+<script>
+  setTimeout(() => {
+    navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+    if (navigator.vibrate) {
+      console.log("支持设备震动！");
+      span.innerHTML = '支持设备震动'
+    } else {
+      span.innerHTML = '不支持设备震动'
+    }
+  }, 1000)
+  zd.onclick = function () {
+    navigator.vibrate(1000);
+  }
+</script>
