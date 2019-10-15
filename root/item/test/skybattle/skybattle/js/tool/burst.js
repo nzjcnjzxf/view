@@ -1,0 +1,110 @@
+function burst(){
+   this.x=0;
+   this.y=0;
+   this.count=0;
+   this.r=100;
+   game.boommusic.load();
+   game.boommusic.oncanplay=function(){
+    game.boommusic.play();
+   }   
+   
+}
+burst.prototype.init=function(a){
+   this.x=a.x;
+   this.y=a.y; 
+}
+burst.prototype.update=function(i){
+    this.count++;
+    if(self.count==13){
+        game.burst.splice(i,1);
+    }
+}
+burst.prototype.rander=function(){
+    var self=this;
+    if(self.count==1){
+        game.ctx.drawImage(game.R.enmyboom,0,0,192,192,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==2)
+    {
+         game.ctx.drawImage(game.R.enmyboom,192,0,192,192,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==3){
+        game.ctx.drawImage(game.R.enmyboom,384,0,192,192,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==4)
+    {
+         game.ctx.drawImage(game.R.enmyboom,576,0,192,192,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==5)
+    {
+         game.ctx.drawImage(game.R.enmyboom,768,0,192,192,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==6){
+        game.ctx.drawImage(game.R.enmyboom,0,192,192,192,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==7)
+    {
+         game.ctx.drawImage(game.R.enmyboom,192,192,192,192,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==8){
+        game.ctx.drawImage(game.R.enmyboom,384,192,192,192,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==9)
+    {
+         game.ctx.drawImage(game.R.enmyboom,576,192,192,192,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==10)
+    {
+         game.ctx.drawImage(game.R.enmyboom,768,192,192,192,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==11)
+    {
+         game.ctx.drawImage(game.R.enmyboom,0,384,192,192,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==12)
+    {
+         game.ctx.drawImage(game.R.enmyboom,192,384,192,192,self.x,self.y,self.r,self.r);
+    }
+}
+
+function bulletfeel(){
+    this.x=0;
+    this.y=0;
+    this.count=0;
+    this.r=40;
+}
+bulletfeel.prototype.init=function(a){
+    this.x=a.x;
+    this.y=a.y-20;
+}
+bulletfeel.prototype.update=function(i){
+var self=this;
+self.count++;
+if(self.count==7){
+    game.bulletfeel.splice(i,1);
+}
+}
+bulletfeel.prototype.rander=function(){
+    var self=this;
+    if(self.count==1){
+        game.ctx.drawImage(game.R.bulletfeel,0,0,32,32,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==2){
+        game.ctx.drawImage(game.R.bulletfeel,0,32,32,32,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==3){
+        game.ctx.drawImage(game.R.bulletfeel,0,64,32,32,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==4){
+        game.ctx.drawImage(game.R.bulletfeel,32,0,32,32,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==5){
+        game.ctx.drawImage(game.R.bulletfeel,32,32,32,32,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==6){
+        game.ctx.drawImage(game.R.bulletfeel,32,64,32,32,self.x,self.y,self.r,self.r);
+    }
+    if(self.count==7){
+        game.ctx.drawImage(game.R.bulletfeel,64,0,32,32,self.x,self.y,self.r,self.r);
+    }
+}

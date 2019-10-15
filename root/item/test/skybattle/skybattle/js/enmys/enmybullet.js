@@ -1,0 +1,376 @@
+function enmybullet1(){//第一种类型子弹
+    this.x=0;
+    this.y=0;
+    this.damage=0;
+    this.width=15;
+    this.height=15;
+}
+enmybullet1.prototype.init=function(i,j){
+    if(j==0){
+    this.x=i.x+i.width/2;
+    this.y=i.y+i.height;
+    this.damage=i.damage;
+     }
+     else if(j==1){
+    this.x=i.x-10;
+    this.y=i.y+i.height;
+    this.damage=i.damage;
+     }
+     else if(j==2){
+    this.x=i.x+i.width+10;
+    this.y=i.y+i.height;
+    this.damage=i.damage;
+     }
+}
+enmybullet1.prototype.update=function(i){
+    var self=this;
+      self.y+=6;
+      if(boom(self,game.plane)){
+        if((self.damage-game.plane.defense)>0){
+        game.plane.hp-=(self.damage-game.plane.defense);
+          }
+        game.Enmybullet.splice(i,1);
+      }
+      if(self.y>700){
+        game.Enmybullet.splice(i,1);
+      }
+}
+enmybullet1.prototype.rander=function(){
+    game.ctx.drawImage(game.R.enmy_bullet1,this.x,this.y,this.width,this.height);
+}
+//end
+//
+//
+//
+//
+function enmybullet2(){   //第二种类型子弹
+    this.x=0;
+    this.y=0;
+    this.damage=0;
+    this.width=15;
+    this.height=15;
+    this.kind=0;
+}
+enmybullet2.prototype.init=function(i,j){
+    this.x=i.x+i.width/2-10;
+    this.y=i.y+i.height;
+    this.damage=i.damage;
+    this.kind=j;
+}
+enmybullet2.prototype.update=function(i){
+    var self=this;
+    separate(self,this.kind);
+    if(boom(self,game.plane)){
+        if((self.damage-game.plane.defense)>0){
+        game.plane.hp-=(self.damage-game.plane.defense);
+          }
+        game.Enmybullet.splice(i,1);
+      }
+      if(self.y>700){
+        game.Enmybullet.splice(i,1);
+      }
+}
+enmybullet2.prototype.rander=function(){
+game.ctx.drawImage(game.R.enmy_bullet1,this.x,this.y,this.width,this.height);
+}
+
+//end
+//
+//
+//
+function enmybullet3(){
+    this.x=0;
+    this.y=0;
+    this.damage=0;
+    this.width=7;
+    this.height=25;
+    
+}
+enmybullet3.prototype.init=function(i){//第三种类型的子弹
+    this.x=i.x+i.width/2-10;
+    this.y=i.y+i.height;
+    this.damage=i.damage;
+   
+}
+enmybullet3.prototype.update=function(i){
+    var self=this;
+       self.y+=8;
+     if(boom(self,game.plane)){
+        if((self.damage-game.plane.defense)>0){
+        game.plane.hp-=(self.damage-game.plane.defense);
+          }
+        game.Enmybullet.splice(i,1);
+      }
+      if(self.y>700){
+        game.Enmybullet.splice(i,1);
+      }
+}
+enmybullet3.prototype.rander=function(){
+    game.ctx.drawImage(game.R.enmy_bullet2,this.x,this.y,this.width,this.height);
+}
+//end
+//
+//
+//
+function enmybullet4(){////第四种类型的子弹
+    this.x=0;
+    this.y=0;
+    this.damage=0;
+    this.width=15;
+    this.height=15;
+    this.kind=0;
+}
+enmybullet4.prototype.init=function(i,j){
+    this.x=i.x+i.width/2-10;
+    this.y=i.y+i.height;
+    this.damage=i.damage;
+    this.kind=j;//规定子弹的方向;
+ }
+enmybullet4.prototype.update=function(i){
+    var self=this;
+    cicle(self,self.kind);
+     if(boom(self,game.plane)){
+        if((self.damage-game.plane.defense)>0){
+        game.plane.hp-=(self.damage-game.plane.defense);
+          }
+        game.Enmybullet.splice(i,1);
+      }
+    if(self.y>700){
+        game.Enmybullet.splice(i,1);
+      }
+}
+enmybullet4.prototype.rander=function(){
+    game.ctx.drawImage(game.R.enmy_bullet3,this.x,this.y,this.width,this.height);
+}
+//end
+//
+//
+
+
+function enmybullet5(){
+  this.x=0;
+  this.y=0;
+  this.damage=0;
+  this.width=15;
+  this.height=15;
+  this.kind=0;
+  this.plane=0;
+}
+enmybullet5.prototype.init=function(i,j){
+  var self=this;
+     if(j==1){
+    self.x=i.x-10;
+    self.y=i.y+i.height;
+    self.damage=i.damage;
+     }
+     else if(j==2){
+    self.x=i.x+i.width+10;
+    self.y=i.y+i.height;
+    self.damage=i.damage;
+     }
+     self.plane=every(self,game.plane);
+}
+enmybullet5.prototype.update=function(i){
+       var self=this;
+     everypath(self,self.plane.x,self.plane.y,self.plane.j);
+      if(boom(self,game.plane)){
+        if((self.damage-game.plane.defense)>0){
+        game.plane.hp-=(self.damage-game.plane.defense);
+          }
+        game.Enmybullet.splice(i,1);
+      }
+    if(self.y>700){
+        game.Enmybullet.splice(i,1);
+      }
+}
+enmybullet5.prototype.rander=function(){
+    game.ctx.drawImage(game.R.enmy_bullet4,this.x,this.y,this.width,this.height);
+}
+function bossbullet1(){//boss的第一种类型技能
+    this.x=0;
+    this.y=0;
+    this.damage=0;
+    this.width=5;
+    this.height=20;
+}
+bossbullet1.prototype.init=function(i,j){
+    if(j==1){
+    this.x=i.x+i.width/2-80;
+     }
+    if(j==2){
+    this.x=i.x+i.width/2+80;
+     }
+    this.y=i.y+i.height;
+    this.damage=i.damage;
+}
+bossbullet1.prototype.update=function(i){
+   var self=this;
+   self.y+=13;
+   if(boom(self,game.plane)){
+        if((self.damage-game.plane.defense)>0){
+        game.plane.hp-=(self.damage-game.plane.defense);
+          }
+        game.Enmybullet.splice(i,1);
+      }
+    if(self.y>700){
+        game.Enmybullet.splice(i,1);
+    }
+}
+bossbullet1.prototype.rander=function(){
+   game.ctx.drawImage(game.R.bossbullet1,this.x,this.y,this.width,this.height);
+}
+//end
+//
+//
+//
+//
+function bossbullet2(){//boss的第二种类型技能
+    this.x=0;
+    this.y=0;
+    this.damage=0; 
+    this.width=15;
+    this.height=15;
+    this.kind=0;
+}
+bossbullet2.prototype.init=function(i,j){
+    this.x=i.x+i.width/2-10;
+    this.y=i.y+i.height-30;
+    this.damage=i.damage;
+    this.kind=j;//规定子弹的方向;
+}
+bossbullet2.prototype.update=function(i){
+    var self=this;
+    cicle(self,self.kind);
+    if(boom(self,game.plane)){
+        if((self.damage-game.plane.defense)>0){
+        game.plane.hp-=(self.damage-game.plane.defense);
+          }
+        game.Enmybullet.splice(i,1);
+      }
+    if(self.y>700){
+        game.Enmybullet.splice(i,1);
+      }
+}
+bossbullet2.prototype.rander=function(){
+    game.ctx.drawImage(game.R.bossbullet2,this.x,this.y,this.width,this.height);
+}
+//end
+//
+//
+
+function boss2bullet1(){//boss2的第一种技能                                                                       
+  this.x=0;
+  this.y=0;
+  this.damage=0;
+  this.width=10;
+  this.height=28;
+}
+boss2bullet1.prototype.init=function(i,j){
+  if(j==1){
+    this.x=i.x+i.width/2-80;
+     }
+    if(j==2){
+    this.x=i.x+i.width/2+80;
+     }
+      if(j==3){
+    this.x=i.x+i.width/2-40;
+     }
+    if(j==4){
+    this.x=i.x+i.width/2+40;
+     }
+    this.y=i.y+i.height;
+    this.damage=i.damage;
+}
+boss2bullet1.prototype.update=function(i){ 
+      var self=this;
+       self.y+=10;
+       if(boom(self,game.plane)){
+        if((self.damage-game.plane.defense)>0){
+        game.plane.hp-=(self.damage-game.plane.defense);
+        }
+        game.Enmybullet.splice(i,1);
+      }
+    if(self.y>700){
+        game.Enmybullet.splice(i,1);
+    }
+
+}
+boss2bullet1.prototype.rander=function(){
+   game.ctx.drawImage(game.R.boss2bullet1,this.x,this.y,this.width,this.height);
+}
+function boss2bullet2(){ //boss2的第二种技能
+  this.x=0;
+  this.y=0;
+  this.damage=0;
+  this.width=30;
+  this.height=20; 
+}
+boss2bullet2.prototype.init=function(i,j){
+  if(j==1){
+    this.x=i.x+i.width/2-40;
+     }
+    if(j==2){
+    this.x=i.x+i.width/2+40;
+     }
+     if(j==3){
+    this.x=i.x+i.width/2-80;
+     }
+    if(j==4){
+    this.x=i.x+i.width/2+80;
+     }
+     if(j==5){
+    this.x=i.x+i.width/2-120;
+     }
+    if(j==6){
+    this.x=i.x+i.width/2+120;
+     }
+    this.y=i.y+i.height;
+    this.damage=i.damage;
+}
+boss2bullet2.prototype.update=function(i){
+ var self=this;
+       self.y+=10;
+      if(boom(self,game.plane)){
+        if((self.damage-game.plane.defense)>0){
+        game.plane.hp-=(self.damage-game.plane.defense);
+        }
+        game.Enmybullet.splice(i,1);
+      }
+       if(self.y>700){
+        game.Enmybullet.splice(i,1);
+    }
+}
+boss2bullet2.prototype.rander=function(){
+  game.ctx.drawImage(game.R.boss2bullet2,this.x,this.y,this.width,this.height);
+}
+//end
+//
+//
+function boss2bullet3(){
+   this.x=0;
+  this.y=0;
+  this.damage=0;
+  this.width=200;
+  this.height=90;
+}
+boss2bullet3.prototype.init=function(i){
+    this.x=i.x;
+    this.y=i.y+i.height;
+    this.damage=i.damage;
+}
+boss2bullet3.prototype.update=function(i){
+var self=this;
+       self.y+=10;
+      if(boom(self,game.plane)){
+        if((self.damage-game.plane.defense)>0){
+        game.plane.hp-=(self.damage-game.plane.defense);
+        }
+      } 
+      game.mybullet.length=0;
+       if(self.y>700){
+        game.Enmybullet.splice(i,1);
+    }
+}
+boss2bullet3.prototype.rander=function(){
+  game.ctx.drawImage(game.R.boss2bullet2,this.x,this.y,this.width,this.height);
+}

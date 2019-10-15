@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Title</title>
+</head>
+<meta http-equiv=”Content-Type” content=”text/html; charset=utf-8″>
+<script src="http://h.api.4399.com/h5mini-2.0/h5api-interface.php"></script>
+<script src ="js/tool/underscore.js"></script>
+<script src="js/background.js"></script>
+<script src="js/game.js"></script>
+<script src="js/json.js"></script>
+<script src="js/plane.js"></script>
+<script src="js/enmys/enmybullet.js"></script>
+<script src="js/mybullet.js"></script>
+<script src="js/enmys/enmy_f.js"></script>
+<script src="js/tool/boom.js"></script>
+<script src="js/tool/path.js"></script>
+<script src="js/map.js"></script>
+<script src="js/tool/burst.js"></script>
+<script src="js/tool/button.js"></script>
+<script src="js/special.js"></script>
+<script src="js/tool/score.js"></script>
+<style>
+#ID{
+    position: absolute;
+    border-style: solid;
+    border-width: 1px;
+    z-index: 0;
+}
+#ID1{
+    position:absolute;
+    border-style: solid;
+    border-width: 1px;
+    z-index: 1;
+}
+#container{
+    margin: 0 auto;
+    width:400px;
+    height:550px;
+}
+</style>
+<body>
+<div id="container" >
+    <canvas id="ID" width="400" height="550">Your Browser does not support Canvas, please upgrade</canvas>
+    <canvas id="ID1" width="400" height="550">Your Browser does not support Canvas, please upgrade</canvas>
+</div>
+<audio src='audio/background1.mp3' id="back1"/>
+<audio src='audio/boom.mp3' id="boom"/>
+<audio src='audio/bossboom.mp3' id="bossboom"/>
+<audio src='audio/biubiubiu.mp3' id="biubiubiu"/>
+<audio src='audio/biu.mp3' id="biu"/>
+<audio src='audio/boombiu.mp3' id="boombiu"/>
+
+
+<script>
+var game=new game();
+</script>
+</body>
+</html>
